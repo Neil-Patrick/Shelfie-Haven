@@ -13,6 +13,10 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+
+    flatDir {
+        dirs("libs")
+    }
 }
 
 dependencies {
@@ -21,6 +25,8 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+implementation("com.github.kwhat:jnativehook:2.2.2")
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -35,3 +41,6 @@ application {
     mainClass = "org.example.App"
     
 }
+
+
+
