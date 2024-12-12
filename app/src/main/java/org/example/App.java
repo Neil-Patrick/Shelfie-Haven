@@ -5,33 +5,21 @@ package org.example;
 
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+// import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
 public class App implements NativeKeyListener {
-    public void nativeKeyPressed(NativeKeyEvent e) {
-		System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+    // public void nativeKeyPressed(NativeKeyEvent e) {
+	// 	System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
 
-		if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
-            		try {
-                		GlobalScreen.unregisterNativeHook();
-            		} catch (NativeHookException nativeHookException) {
-                		nativeHookException.printStackTrace();
-            		}
-        	}
-	}
-
-	public void nativeKeyReleased(NativeKeyEvent e) {
-		System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-	}
-
-	public void nativeKeyTyped(NativeKeyEvent e) {
-		System.out.println("Key Typed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-	}
-
-    public String getGreeting() {
-        return "Whatsup";
-    }
+	// 	if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
+    //         		try {
+    //             		GlobalScreen.unregisterNativeHook();
+    //         		} catch (NativeHookException nativeHookException) {
+    //             		nativeHookException.printStackTrace();
+    //         		}
+    //     	}
+	// }
 
     public static void main(String[] args) {
         try {
@@ -43,7 +31,10 @@ public class App implements NativeKeyListener {
 
 			System.exit(1);
 		}
-
-		GlobalScreen.addNativeKeyListener(new App());
+		//==================== Login ================================
+		Login login = new Login();
+        GlobalScreen.addNativeKeyListener(login);
     }
+
+	
 }
