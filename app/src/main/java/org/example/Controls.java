@@ -1,4 +1,5 @@
 package org.example;    // package org.example;
+import org.fusesource.jansi.AnsiConsole;
 
 public class Controls {
 
@@ -13,6 +14,7 @@ public class Controls {
 	}
 
     public static void PrintSelectedOptions(String text, int currentUi, boolean isSelected) {
+        AnsiConsole.systemInstall();
         String greenColor = "\033[32m";
         String resetColor = "\033[0m";
         if (isSelected) {
@@ -21,7 +23,6 @@ public class Controls {
             System.out.println(text);
             
         }
-
 
     }
 }
