@@ -2,6 +2,9 @@ package org.example;    // package org.example;
 import org.fusesource.jansi.AnsiConsole;
 
 public class Controls {
+    public enum EventState {
+        LOGIN, HOME
+    }
 
     private static int windowWidth = 150;
     public static int SelectMenu(String keys, int numberOfOptions, int SelectedMenuForView) {
@@ -19,9 +22,9 @@ public class Controls {
         String greenColor = "\033[32m";
         String resetColor = "\033[0m";
         if (isSelected) {
-            System.out.println(greenColor + text + resetColor);
+            Controls.PrintInCenter(greenColor + text + resetColor);
         } else {
-            System.out.println(text);
+            Controls.PrintInCenter(text);
             
         }
 

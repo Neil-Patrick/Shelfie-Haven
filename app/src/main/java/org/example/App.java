@@ -3,12 +3,19 @@
  */
 package org.example;
 
+import org.example.Controls.EventState;
+
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
 public class App implements NativeKeyListener {
-    
+	public static EventState currentEventState = EventState.LOGIN; // Default state
+	public static Login login = new Login();
+	public static Home home = new Home();
+
+
 
     public static void main(String[] args) {
         try {
@@ -21,20 +28,35 @@ public class App implements NativeKeyListener {
 			System.exit(1);
 		}
 		//==================== Login ================================
-		Login login = new Login();
-		GlobalScreen.addNativeKeyListener(login);
-		if (login.userAuthenticated) {
-			GlobalScreen.removeNativeKeyListener(login);
-			Controls.clearScreen();
-			//==================== Home Page ================================
-			AsciiUIDesign.HomePageUi();
-			
-		}
-		
-
+		GlobalScreen.addNativeKeyListener(new App());
+		login.PrintLoginUI();
 		
 		
     }
+
+	public void nativeKeyPressed(NativeKeyEvent e) {
+		switch (currentEventState) {
+			case LOGIN:
+				login.LoginNativeKeyPressed(e);
+				break;
+			case HOME:
+				home.HomeNativeKeyPressed(e);
+				break;
+			default:
+				break;
+		}
+	}
+
+	public void nativeKeyTyped(NativeKeyEvent e) {
+		switch (currentEventState) {
+			case LOGIN:
+				login.LoginnativeKeyTyped(e);
+				break;
+			//walang home kasi walang key typed sa home
+			default:
+				break;
+		}
+	}
 
 	
 }

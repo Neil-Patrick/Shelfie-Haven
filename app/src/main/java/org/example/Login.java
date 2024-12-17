@@ -7,28 +7,12 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import java.lang.Thread;
 public class Login implements NativeKeyListener {
 
-    public boolean userAuthenticated = false;
     String username = "";
     String password = "";
-    int time = 1000;
 
-    public Login() {
-        while (true) {
-            if (!userAuthenticated) {
-                //TODO: Create a conditionn here that will stop the program if the username and password are correct
-                PrintLoginUI();
-                try {
-                    Thread.sleep(time);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }            } else {
-                break;
-            }
-        }
-        
-    }
+    
 
-    public void nativeKeyPressed(NativeKeyEvent e) {
+    public void LoginNativeKeyPressed(NativeKeyEvent e) {
 		// System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
 		if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
             Controls.clearScreen();
@@ -68,7 +52,7 @@ public class Login implements NativeKeyListener {
         }
     }
 
-    public void nativeKeyTyped(NativeKeyEvent e) {
+    public void LoginnativeKeyTyped(NativeKeyEvent e) {
 		if (Character.isLetter(e.getKeyChar())) {
             char keyChar = e.getKeyChar();
             if (NativeKeyEvent.getModifiersText(e.getModifiers()).contains("Shift")) {
@@ -97,9 +81,19 @@ public class Login implements NativeKeyListener {
     public void ProceedLogin(String username, String password) {
         Controls.clearScreen();
         if (username.equals("admin") && password.equals("admin")) {
+            //TODO: Pagandahin tong Login Successful at igitna
             System.out.println("Login Successful");
-            userAuthenticated = true;
+            try {
+                Thread.sleep(1000); // 1-second delay
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Controls.clearScreen();
+            AsciiUIDesign.HomePageUi();
+            App.currentEventState = Controls.EventState.HOME;
         } else {
+            //TODO: Pagandahin tong Login Successful at igitna
+
             System.out.println("Login Failed");
         }
     }
