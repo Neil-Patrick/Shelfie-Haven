@@ -3,6 +3,7 @@ import org.fusesource.jansi.AnsiConsole;
 
 public class Controls {
 
+    private static int windowWidth = 150;
     public static int SelectMenu(String keys, int numberOfOptions, int SelectedMenuForView) {
         int step = (keys == "up") ? -1 : 1;
         int n = (SelectedMenuForView + step + numberOfOptions) % numberOfOptions;
@@ -24,6 +25,12 @@ public class Controls {
             
         }
 
+    }
+
+    public static void PrintInCenter(String message) {
+        int leftPadding = (windowWidth - message.length()) / 2;
+
+        System.out.println(new String(new char[leftPadding]).replace('\0', ' ') + message);    
     }
 }
 

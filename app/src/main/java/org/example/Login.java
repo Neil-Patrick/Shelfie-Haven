@@ -4,20 +4,32 @@ import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
-
+import java.lang.Thread;
 public class Login implements NativeKeyListener {
 
+    public boolean userAuthenticated = false;
     String username = "";
     String password = "";
+    int time = 1000;
 
     public Login() {
-        //TODO: Create a conditionn here that will stop the program if the username and password are correct
-        PrintLoginUI();
+        while (true) {
+            if (!userAuthenticated) {
+                //TODO: Create a conditionn here that will stop the program if the username and password are correct
+                PrintLoginUI();
+                try {
+                    Thread.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }            } else {
+                break;
+            }
+        }
+        
     }
 
     public void nativeKeyPressed(NativeKeyEvent e) {
 		// System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-
 		if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
             Controls.clearScreen();
             LayerManager.Login = 1;
@@ -51,6 +63,8 @@ public class Login implements NativeKeyListener {
             PrintLoginUI();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.Login == 0) {
             ProceedLogin(username, password);
+            username = "";
+            password = "";
         }
     }
 
@@ -84,6 +98,7 @@ public class Login implements NativeKeyListener {
         Controls.clearScreen();
         if (username.equals("admin") && password.equals("admin")) {
             System.out.println("Login Successful");
+            userAuthenticated = true;
         } else {
             System.out.println("Login Failed");
         }
