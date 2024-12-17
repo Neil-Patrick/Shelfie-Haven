@@ -7,7 +7,6 @@ public class Controls {
     }
 
     private static int windowWidth = 150;
-    private static int homeLeftPadding = 60;
     public static int SelectMenu(String keys, int numberOfOptions, int SelectedMenuForView) {
         int step = (keys == "up") ? -1 : 1;
         int n = (SelectedMenuForView + step + numberOfOptions) % numberOfOptions;
@@ -23,9 +22,9 @@ public class Controls {
         String greenColor = "\033[32m";
         String resetColor = "\033[0m";
         if (isSelected) {
-            System.out.println(greenColor + text + resetColor);
+            PrintInCenter(greenColor + text + resetColor);
         } else {
-            System.out.println(text);
+            PrintInCenter(text);
             
         }
 
@@ -36,7 +35,7 @@ public class Controls {
         System.out.println(new String(new char[leftPadding]).replace('\0', ' ') + message);    
     }
     
-    public static void PrintOptionInCenter(String text, int windowWidth, boolean isSelected) {
+    public static void PrintOptionInCenter(String text, int windowWidth, boolean isSelected, int homeLeftPadding) {
         AnsiConsole.systemInstall();
         String greenColor = "\033[32m";
         String resetColor = "\033[0m";

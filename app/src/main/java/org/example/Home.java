@@ -25,11 +25,11 @@ public class Home {
 
     public static void PrintHomeUI() {
         AsciiUIDesign.HomePageUi();
-        Controls.PrintOptionInCenter(AsciiUIDesign.Status(), LayerManager.HomeOptions, LayerManager.HomeOptions == 0);
-        Controls.PrintOptionInCenter(AsciiUIDesign.BookCatalog(), LayerManager.HomeOptions, LayerManager.HomeOptions == 1);
-        Controls.PrintOptionInCenter(AsciiUIDesign.SearchAndBorrow(), LayerManager.HomeOptions, LayerManager.HomeOptions == 2);
-        Controls.PrintOptionInCenter(AsciiUIDesign.BorrowBookStatus(), LayerManager.HomeOptions, LayerManager.HomeOptions == 3);
-        Controls.PrintOptionInCenter(AsciiUIDesign.Logout(), LayerManager.HomeOptions, LayerManager.HomeOptions == 4);
+        Controls.PrintOptionInCenter(AsciiUIDesign.Status(), LayerManager.HomeOptions, LayerManager.HomeOptions == 0, 60);
+        Controls.PrintOptionInCenter(AsciiUIDesign.BookCatalog(), LayerManager.HomeOptions, LayerManager.HomeOptions == 1, 60);
+        Controls.PrintOptionInCenter(AsciiUIDesign.SearchAndBorrow(), LayerManager.HomeOptions, LayerManager.HomeOptions == 2,  60);
+        Controls.PrintOptionInCenter(AsciiUIDesign.BorrowBookStatus(), LayerManager.HomeOptions, LayerManager.HomeOptions == 3, 60);
+        Controls.PrintOptionInCenter(AsciiUIDesign.Logout(), LayerManager.HomeOptions, LayerManager.HomeOptions == 4, 60);
     }
 
     public void Logout() {

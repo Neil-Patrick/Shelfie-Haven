@@ -74,8 +74,15 @@ public class Login implements NativeKeyListener {
 
     public void PrintLoginUI() {
         AsciiUIDesign.LoginUi();
-        Controls.PrintSelectedOptions("Username: " + username, LayerManager.Login, LayerManager.LoginInput == 0);
-        Controls.PrintSelectedOptions("Password: " + password, LayerManager.Login, LayerManager.LoginInput == 1);
+        Controls.PrintOptionInCenter(username, LayerManager.Login, LayerManager.LoginInput == 0, 45);
+        Controls.PrintOptionInCenter("═══════════════════════════Username════════════════════════════", LayerManager.Login, LayerManager.LoginInput == 0, 45);
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        Controls.PrintOptionInCenter(password, LayerManager.Login, LayerManager.LoginInput == 1, 45);
+        Controls.PrintOptionInCenter("═══════════════════════════Password════════════════════════════", LayerManager.Login, LayerManager.LoginInput == 1, 45);
+
+
     }
 
     public void ProceedLogin(String username, String password) {

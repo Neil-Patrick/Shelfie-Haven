@@ -5,19 +5,22 @@ public class AsciiUIDesign {
     //https://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Login = link for design generator
 
     public static void LoginUi() {
-        Controls.PrintInCenter("██╗      ██████╗  ██████╗ ██╗███╗   ██╗");
-        Controls.PrintInCenter("██║     ██╔═══██╗██╔════╝ ██║████╗  ██║");
-        Controls.PrintInCenter("██║     ██║   ██║██║  ███╗██║██╔██╗ ██║");
-        Controls.PrintInCenter("██║     ██║   ██║██║   ██║██║██║╚██╗██║");
-        Controls.PrintInCenter("███████╗╚██████╔╝╚██████╔╝██║██║ ╚████║");
-        Controls.PrintInCenter("╚══════╝ ╚═════╝  ╚═════╝ ╚═╝╚═╝  ╚═══╝");
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                                         Login                                   ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        
+
 
     }
 
     public static void HomePageUi() {
-        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════╗");
-        Controls.PrintInCenter("║                     Welcome to Library Home Page                ║");
-        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                              Welcome to Library Menu Page                       ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
     }
 
     public static String Status() {
@@ -42,7 +45,7 @@ public class AsciiUIDesign {
     } 
     public static String Logout() {
         return "╔═══════════════════════════════╗\n" +
-               "║           Logout              ║\n" +
+               "║              Logout           ║\n" +
                "╚═══════════════════════════════╝\n";
     } 
 
