@@ -7,6 +7,7 @@ public class Controls {
     }
 
     private static int windowWidth = 150;
+    private static int homeLeftPadding = 60;
     public static int SelectMenu(String keys, int numberOfOptions, int SelectedMenuForView) {
         int step = (keys == "up") ? -1 : 1;
         int n = (SelectedMenuForView + step + numberOfOptions) % numberOfOptions;
@@ -22,9 +23,9 @@ public class Controls {
         String greenColor = "\033[32m";
         String resetColor = "\033[0m";
         if (isSelected) {
-            Controls.PrintInCenter(greenColor + text + resetColor);
+            System.out.println(greenColor + text + resetColor);
         } else {
-            Controls.PrintInCenter(text);
+            System.out.println(text);
             
         }
 
@@ -32,9 +33,31 @@ public class Controls {
 
     public static void PrintInCenter(String message) {
         int leftPadding = (windowWidth - message.length()) / 2;
-
         System.out.println(new String(new char[leftPadding]).replace('\0', ' ') + message);    
     }
+    
+    public static void PrintOptionInCenter(String text, int windowWidth, boolean isSelected) {
+        AnsiConsole.systemInstall();
+        String greenColor = "\033[32m";
+        String resetColor = "\033[0m";
+    
+        // Split the input text into lines by \n
+        String[] lines = text.split("\n");
+    
+        for (String line : lines) {
+            // Calculate padding for centering the current line
+            String paddedLine = new String(new char[homeLeftPadding]).replace('\0', ' ') + line;
+    
+            // Print each line with or without color
+            if (isSelected) {
+                System.out.println(greenColor + paddedLine + resetColor);
+            } else {
+                System.out.println(paddedLine);
+            }
+        }
+    }
+    
+    
 }
 
 

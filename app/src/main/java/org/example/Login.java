@@ -89,7 +89,7 @@ public class Login implements NativeKeyListener {
                 e.printStackTrace();
             }
             Controls.clearScreen();
-            AsciiUIDesign.HomePageUi();
+            Home.PrintHomeUI();
             App.currentEventState = Controls.EventState.HOME;
         } else {
             //TODO: Pagandahin tong Login Successful at igitna
