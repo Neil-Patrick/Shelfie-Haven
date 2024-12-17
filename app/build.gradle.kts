@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.guava)
 implementation("com.github.kwhat:jnativehook:2.2.2")
 implementation("org.fusesource.jansi:jansi:2.4.1")
+implementation("mysql:mysql-connector-java:8.0.33")
 
 }
 

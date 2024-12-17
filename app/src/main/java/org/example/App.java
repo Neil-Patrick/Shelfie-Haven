@@ -3,6 +3,11 @@
  */
 package org.example;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import org.example.Controls.EventState;
 
 import com.github.kwhat.jnativehook.GlobalScreen;
@@ -18,6 +23,8 @@ public class App implements NativeKeyListener {
 
 
     public static void main(String[] args) {
+		Queries.GetAllBooks();//TODO: remove this line after testing connection to database is successful 
+		
         try {
 			GlobalScreen.registerNativeHook();
 		}
