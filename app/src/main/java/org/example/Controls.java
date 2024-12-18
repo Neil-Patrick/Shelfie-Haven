@@ -6,6 +6,8 @@ public class Controls {
         LOGIN, HOME, CATALOG
     }
 
+    public static boolean isCtrlPressed = false;
+
     private static int windowWidth = 150;
     public static int SelectMenu(String keys, int numberOfOptions, int SelectedMenuForView) {
         int step = (keys == "up") ? -1 : 1;

@@ -71,6 +71,16 @@ public class App implements NativeKeyListener {
 		}
 	}
 
+	public void nativeKeyReleased(NativeKeyEvent e) {
+		switch (currentEventState) {
+			case CATALOG:
+				catalog.CatalogNativeKeyReleased(e);
+				break;
+			default:
+				break;
+		}
+	}
+
 	public void nativeKeyTyped(NativeKeyEvent e) {
 		switch (currentEventState) {
 			case LOGIN:

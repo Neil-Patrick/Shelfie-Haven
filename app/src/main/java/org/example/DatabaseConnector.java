@@ -14,7 +14,6 @@ public class DatabaseConnector {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver"); 
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                System.out.println("Database connected successfully!");
             } catch (ClassNotFoundException e) {
                 System.out.println("JDBC Driver not found!");
                 e.printStackTrace();
@@ -31,7 +30,6 @@ public class DatabaseConnector {
         if (connection != null) {
             try {
                 connection.close();
-                System.out.println("Database connection closed.");
                 connection = null; // Reset connection
             } catch (SQLException e) {
                 System.out.println("Failed to close connection!");
