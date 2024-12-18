@@ -63,6 +63,28 @@ public class AsciiUIDesign {
         Controls.PrintInCenter("");
         Controls.PrintInCenter("");
     }
+    public static void MenuGuideUI(){
+        Controls.PrintInCenter("╔══════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                NAVIGATION GUIDE              ║");
+        Controls.PrintInCenter("║                                              ║");
+        Controls.PrintInCenter("║    Select: Up Arrow Key and Down Arrow Key   ║");
+        Controls.PrintInCenter("║               Confirm: Enter Key             ║");
+        Controls.PrintInCenter("╚══════════════════════════════════════════════╝");
+       
+    }
+    public static void BookCatalogGuideUI(){
+        Controls.PrintInCenter("╔════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                      NAVIGATION GUIDE                      ║");
+        Controls.PrintInCenter("║                                                            ║");
+        Controls.PrintInCenter("║         Browse: Left Arrow Key and Right Arrow Key         ║");
+        Controls.PrintInCenter("║         Add Book: CTRL Key + Shift + (+) plus sign         ║");
+        Controls.PrintInCenter("║    Add Book Navigation: Up Arrow Key and Down Arrow Key    ║");
+        Controls.PrintInCenter("║         Remove a Character: Backspace/DELETE Key           ║");
+        Controls.PrintInCenter("║                Confirm Add Book: Enter Key                 ║");
+        Controls.PrintInCenter("║                   Back: Escape Key (Esc)                   ║");
+        Controls.PrintInCenter("╚════════════════════════════════════════════════════════════╝");
+        
+    }
     
 
 

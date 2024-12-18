@@ -7,10 +7,8 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import java.lang.Thread;
 public class Login implements NativeKeyListener {
 
-    //TODO: After development, baguhin to
-
-    String username = "admin";
-    String password = "admin";
+    String username = "";
+    String password = "";
 
     
 
@@ -101,7 +99,7 @@ public class Login implements NativeKeyListener {
             Home.PrintHomeUI();
             App.currentEventState = Controls.EventState.HOME;
         } else {
-            //TODO: Pagandahin tong Login Successful at igitna
+            //TODO: Pagandahin tong Login failed at igitna
 
             System.out.println("Login Failed");
         }
