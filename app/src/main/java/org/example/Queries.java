@@ -2,9 +2,11 @@ package org.example;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -45,4 +47,44 @@ public class Queries {
     }
         return booksList;
     }
+
+    public static void AddBook(String title, String author, String genre, String location, String date, String quantity) {
+        Connection connection = null;
+
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+
+                // Convert `date` to `java.sql.Date`
+            Date sqlDate = Date.valueOf(date); // Input date must be in "yyyy-MM-dd" format
+
+            // Convert `quantity` to `int`
+            int bookQuantity = Integer.parseInt(quantity);
+            // Query to insert a book
+            String query = "INSERT INTO tbl_books (title, author, genre, location, date, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            // Set parameters
+        preparedStatement.setString(1, title);
+        preparedStatement.setString(2, author);
+        preparedStatement.setString(3, genre);
+        preparedStatement.setString(4, location);
+        preparedStatement.setDate(5, sqlDate);
+        preparedStatement.setInt(6, bookQuantity);
+
+            // Execute update
+            preparedStatement.executeUpdate();
+
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format! Please use 'yyyy-MM-dd'.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid quantity format! Please enter a valid number.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection
+            DatabaseConnector.closeConnection();
+        }
+    }
+
 }

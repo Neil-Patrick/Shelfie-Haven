@@ -7,8 +7,10 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import java.lang.Thread;
 public class Login implements NativeKeyListener {
 
-    String username = "";
-    String password = "";
+    //TODO: After development, baguhin to
+
+    String username = "admin";
+    String password = "admin";
 
     
 

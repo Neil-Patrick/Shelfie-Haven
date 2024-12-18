@@ -87,6 +87,9 @@ public class App implements NativeKeyListener {
 				login.LoginnativeKeyTyped(e);
 				break;
 			//walang home kasi walang key typed sa home
+			case CATALOG:
+				catalog.CatalogNativeKeyTyped(e);
+				break;
 			default:
 				break;
 		}

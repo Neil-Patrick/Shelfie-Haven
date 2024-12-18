@@ -11,12 +11,12 @@ public class Catalog {
 
     
     private static List<Books> booksList;
-    private String title;
-    private String author;
-    private String genre;
-    private String location;
-    private String date;
-    private int quantity;
+    private String title = "";
+    private String author = "";
+    private String genre = "";
+    private String location = "";
+    private String date = "";
+    private String quantity = "";
 
     public void CatalogNativeKeyPressed(NativeKeyEvent e) {
 
@@ -28,11 +28,34 @@ public class Catalog {
             LayerManager.HomeOptions = 0;
             Home.PrintHomeUI();
             
-        }else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && LayerManager.CatalogLayer == 1) {
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && LayerManager.CatalogLayer == 1) {
             LayerManager.CatalogLayer = 0;
             ListBooks();
-        }
-         else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_EQUALS) {
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_BACKSPACE && LayerManager.CatalogLayer == 1) {
+            if (LayerManager.BookInput == 0) {
+                title = title.substring(0, title.length() - 1);
+            } else if (LayerManager.BookInput == 1) {
+                author = author.substring(0, author.length() - 1);
+            } else if (LayerManager.BookInput == 2) {
+                genre = genre.substring(0, genre.length() - 1);
+            } else if (LayerManager.BookInput == 3) {
+                location = location.substring(0, location.length() - 1);
+            } else if (LayerManager.BookInput == 4) {
+                date = date.substring(0, date.length() - 1);
+            } else if (LayerManager.BookInput == 5) {
+                quantity = quantity.substring(0, quantity.length() - 1);
+            }
+            Controls.clearScreen();
+            AddBook();
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 1) {
+            // TODO: Add book to database
+            Queries.AddBook(title, author, genre, location, date, quantity);
+            Controls.clearScreen();
+            LayerManager.CatalogLayer = 0;
+            ListBooks();
+            
+            
+        } else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_EQUALS) {
             Controls.clearScreen();
             LayerManager.CatalogLayer = 1;
             AddBook();
@@ -49,6 +72,33 @@ public class Catalog {
         
     }
 
+    public void CatalogNativeKeyTyped(NativeKeyEvent e) {
+		if (Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') { 
+            char keyChar = e.getKeyChar();
+            if (NativeKeyEvent.getModifiersText(e.getModifiers()).contains("Shift")) {
+                keyChar = Character.toUpperCase(keyChar);
+            } else {
+                keyChar = Character.toLowerCase(keyChar);
+            }
+    
+            if (LayerManager.BookInput == 0) {
+                title += keyChar;
+            } if (LayerManager.BookInput == 1) {
+                author += keyChar;
+            } if (LayerManager.BookInput == 2) {
+                genre += keyChar;
+            } if (LayerManager.BookInput == 3) {
+                location += keyChar;
+            } if (LayerManager.BookInput == 4) {
+                date += keyChar;
+            } if (LayerManager.BookInput == 5) {
+                quantity += keyChar;
+            }
+            Controls.clearScreen();
+            AddBook();
+        }
+	}
+
     public void CatalogNativeKeyReleased(NativeKeyEvent e) {
         if (e.getKeyCode() == NativeKeyEvent.VC_CONTROL) {
             Controls.isCtrlPressed = false;
@@ -61,13 +111,13 @@ public class Catalog {
         booksList = Queries.GetBooks();
         
         Controls.PrintInCenter("");
-        Controls.PrintOptionInCenter("ID:           " + booksList.get(LayerManager.BookIndex).getId(), 150, false, 60);
-        Controls.PrintOptionInCenter("Title:        " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 60);
-        Controls.PrintOptionInCenter("Author:       " + booksList.get(LayerManager.BookIndex).getAuthor(), 150, false, 60);
-        Controls.PrintOptionInCenter("Genre:        " + booksList.get(LayerManager.BookIndex).getGenre(), 150, false, 60);
-        Controls.PrintOptionInCenter("Location:     " + booksList.get(LayerManager.BookIndex).getlocation(), 150, false, 60);
-        Controls.PrintOptionInCenter("Date:         " + booksList.get(LayerManager.BookIndex).getDate(), 150, false, 60);
-        Controls.PrintOptionInCenter("Quantity:     " + booksList.get(LayerManager.BookIndex).getQuantity(), 150, false, 60);
+        Controls.PrintOptionInCenter("ID:           " + booksList.get(LayerManager.BookIndex).getId(), 150, false, 40);
+        Controls.PrintOptionInCenter("Title:        " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 40);
+        Controls.PrintOptionInCenter("Author:       " + booksList.get(LayerManager.BookIndex).getAuthor(), 150, false, 40);
+        Controls.PrintOptionInCenter("Genre:        " + booksList.get(LayerManager.BookIndex).getGenre(), 150, false, 40);
+        Controls.PrintOptionInCenter("Location:     " + booksList.get(LayerManager.BookIndex).getlocation(), 150, false, 40);
+        Controls.PrintOptionInCenter("Date:         " + booksList.get(LayerManager.BookIndex).getDate(), 150, false, 40);
+        Controls.PrintOptionInCenter("Quantity:     " + booksList.get(LayerManager.BookIndex).getQuantity(), 150, false, 40);
         Controls.PrintInCenter("");
         Controls.PrintInCenter("");
         Controls.PrintInCenter("");
@@ -80,13 +130,14 @@ public class Catalog {
     public void AddBook() {
         Controls.clearScreen();
         AsciiUIDesign.AddBookUi();
-        Controls.PrintOptionInCenter("Title:                " + title, 150, LayerManager.BookInput == 0, 60);
-        Controls.PrintOptionInCenter("Author:               " + author, 150, LayerManager.BookInput == 1, 60);
-        Controls.PrintOptionInCenter("Genre:                " + genre, 150, LayerManager.BookInput == 2, 60);
-        Controls.PrintOptionInCenter("Location:             " + location, 150, LayerManager.BookInput == 3, 60);
-        Controls.PrintOptionInCenter("Date(YYYY-MM-DD):     " + date, 150, LayerManager.BookInput == 4, 60);
-        Controls.PrintOptionInCenter("Quantity:             " + quantity, 150, LayerManager.BookInput == 5, 60);
+        Controls.PrintOptionInCenter("Title:                " + title, 150, LayerManager.BookInput == 0, 40);
+        Controls.PrintOptionInCenter("Author:               " + author, 150, LayerManager.BookInput == 1, 40);
+        Controls.PrintOptionInCenter("Genre:                " + genre, 150, LayerManager.BookInput == 2, 40);
+        Controls.PrintOptionInCenter("Location:             " + location, 150, LayerManager.BookInput == 3, 40);
+        Controls.PrintOptionInCenter("Date(YYYY-MM-DD):     " + date, 150, LayerManager.BookInput == 4, 40);
+        Controls.PrintOptionInCenter("Quantity:             " + quantity, 150, LayerManager.BookInput == 5, 40);
 
-        
     }
+
+    
 }
