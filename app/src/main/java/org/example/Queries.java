@@ -91,4 +91,50 @@ public class Queries {
         }
     }
 
+    public static void DeleteBook(int id) {
+        Connection connection = null;
+    
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+    
+            // Query to delete a book based on ID
+            String query = "DELETE FROM tbl_books WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+    
+            // Set the ID parameter
+            preparedStatement.setInt(1, id);
+    
+            // Execute the delete operation
+            int rowsAffected = preparedStatement.executeUpdate();
+    
+            // Provide feedback
+            if (rowsAffected > 0) {
+                System.out.println("Book with ID " + id + " deleted successfully.");
+            } else {
+                System.out.println("No book found with ID " + id + ".");
+            }
+            try {
+                // Add a 2-second delay
+                Thread.sleep(1000);
+            } catch (InterruptedException g) {
+                g.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection
+            try {
+                // Add a 2-second delay
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            DatabaseConnector.closeConnection();
+        }
+    }
+    
+
+    
+
 }

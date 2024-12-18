@@ -93,7 +93,20 @@ public class Catalog {
             String keys = (e.getKeyCode() == NativeKeyEvent.VC_UP) ? "up" : "down";
             LayerManager.BookInput = Controls.SelectMenu(keys, 6, LayerManager.BookInput);
             AddBook();
-        } 
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_DELETE && LayerManager.CatalogLayer == 0) {
+            Controls.clearScreen();
+            LayerManager.CatalogLayer = 2;
+            System.out.println("Are you sure you want to delete this book? ");
+            System.out.println("Press Enter to continue");
+            System.out.println("Press Esc to cancel");
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 2) {
+            Queries.DeleteBook(booksList.get(LayerManager.BookIndex).getId());
+            ListBooks();
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && LayerManager.CatalogLayer == 2) {
+            Controls.clearScreen();
+            LayerManager.CatalogLayer = 0;
+            ListBooks();
+        }
         
     }
 
@@ -133,24 +146,39 @@ public class Catalog {
     public static void ListBooks() {
         Controls.clearScreen();
         AsciiUIDesign.BookCatalogUi();
-        booksList = Queries.GetBooks();
-        
-        Controls.PrintInCenter("");
-        Controls.PrintOptionInCenter("ID:           " + booksList.get(LayerManager.BookIndex).getId(), 150, false, 40);
-        Controls.PrintOptionInCenter("Title:        " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 40);
-        Controls.PrintOptionInCenter("Author:       " + booksList.get(LayerManager.BookIndex).getAuthor(), 150, false, 40);
-        Controls.PrintOptionInCenter("Genre:        " + booksList.get(LayerManager.BookIndex).getGenre(), 150, false, 40);
-        Controls.PrintOptionInCenter("Location:     " + booksList.get(LayerManager.BookIndex).getlocation(), 150, false, 40);
-        Controls.PrintOptionInCenter("Date:         " + booksList.get(LayerManager.BookIndex).getDate(), 150, false, 40);
-        Controls.PrintOptionInCenter("Quantity:     " + booksList.get(LayerManager.BookIndex).getQuantity(), 150, false, 40);
-        Controls.PrintInCenter("");
-        Controls.PrintInCenter("");
-        Controls.PrintInCenter("");
     
-        String greenColor = "\033[32m";
-        String resetColor = "\033[0m";
-        Controls.PrintInCenter(greenColor + "<<< " + (LayerManager.BookIndex + 1) + "/" + (booksList.size()) + " >>>" + resetColor);
+        booksList = Queries.GetBooks();
+    
+        if (booksList.isEmpty()) {
+            Controls.PrintInCenter("No books available in the catalog.");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+        } else {
+            Controls.PrintInCenter("");
+            Controls.PrintOptionInCenter("ID:           " + booksList.get(LayerManager.BookIndex).getId(), 150, false, 40);
+            Controls.PrintOptionInCenter("Title:        " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 40);
+            Controls.PrintOptionInCenter("Author:       " + booksList.get(LayerManager.BookIndex).getAuthor(), 150, false, 40);
+            Controls.PrintOptionInCenter("Genre:        " + booksList.get(LayerManager.BookIndex).getGenre(), 150, false, 40);
+            Controls.PrintOptionInCenter("Location:     " + booksList.get(LayerManager.BookIndex).getlocation(), 150, false, 40);
+            Controls.PrintOptionInCenter("Date:         " + booksList.get(LayerManager.BookIndex).getDate(), 150, false, 40);
+            Controls.PrintOptionInCenter("Quantity:     " + booksList.get(LayerManager.BookIndex).getQuantity(), 150, false, 40);
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+    
+            String greenColor = "\033[32m";
+            String resetColor = "\033[0m";
+            Controls.PrintInCenter(greenColor + "<<< " + (LayerManager.BookIndex + 1) + "/" + (booksList.size()) + " >>>" + resetColor);
+        }
     }
+    
 
     public void AddBook() {
         Controls.clearScreen();
