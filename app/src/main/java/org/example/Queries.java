@@ -75,14 +75,18 @@ public class Queries {
             // Execute update
             preparedStatement.executeUpdate();
 
-        } catch (DateTimeParseException e) {
-            System.out.println("Invalid date format! Please use 'yyyy-MM-dd'.");
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid quantity format! Please enter a valid number.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Adding Failed: Please enter a valid input.");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             // Close the connection
+            try {
+                // Add a 2-second delay
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             DatabaseConnector.closeConnection();
         }
     }

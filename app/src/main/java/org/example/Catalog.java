@@ -11,12 +11,12 @@ public class Catalog {
 
     
     private static List<Books> booksList;
-    private String title = "";
-    private String author = "";
-    private String genre = "";
-    private String location = "";
-    private String date = "";
-    private String quantity = "";
+        private String title = "";
+        private String author = "";
+        private String genre = "";
+        private String location = "";
+        private String date = "";
+        private String quantity = "";
 
     public void CatalogNativeKeyPressed(NativeKeyEvent e) {
 
@@ -32,39 +32,64 @@ public class Catalog {
             LayerManager.CatalogLayer = 0;
             ListBooks();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_BACKSPACE && LayerManager.CatalogLayer == 1) {
-            if (LayerManager.BookInput == 0) {
-                title = title.substring(0, title.length() - 1);
-            } else if (LayerManager.BookInput == 1) {
-                author = author.substring(0, author.length() - 1);
-            } else if (LayerManager.BookInput == 2) {
-                genre = genre.substring(0, genre.length() - 1);
-            } else if (LayerManager.BookInput == 3) {
-                location = location.substring(0, location.length() - 1);
-            } else if (LayerManager.BookInput == 4) {
-                date = date.substring(0, date.length() - 1);
-            } else if (LayerManager.BookInput == 5) {
-                quantity = quantity.substring(0, quantity.length() - 1);
+            try {
+                if (LayerManager.BookInput == 0) {
+                    if (title.length() > 0) {
+                        title = title.substring(0, title.length() - 1);
+                    }
+                } else if (LayerManager.BookInput == 1) {
+                    if (author.length() > 0) {
+                        author = author.substring(0, author.length() - 1);
+                    }
+                } else if (LayerManager.BookInput == 2) {
+                    if (genre.length() > 0) {
+                        genre = genre.substring(0, genre.length() - 1);
+                    }
+                } else if (LayerManager.BookInput == 3) {
+                    if (location.length() > 0) {
+                        location = location.substring(0, location.length() - 1);
+                    }
+                } else if (LayerManager.BookInput == 4) {
+                    if (date.length() > 0) {
+                        date = date.substring(0, date.length() - 1);
+                    }
+                } else if (LayerManager.BookInput == 5) {
+                    if (quantity.length() > 0) {
+                        quantity = quantity.substring(0, quantity.length() - 1);
+                    }
+                }
+            } catch (StringIndexOutOfBoundsException f) {
+                System.out.println("You can't delete while it's already empty.");
+                try {
+                    // Add a 2-second delay
+                    Thread.sleep(1000);
+                } catch (InterruptedException g) {
+                    g.printStackTrace();
+                }
             }
             Controls.clearScreen();
             AddBook();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 1) {
             // TODO: Add book to database
             Queries.AddBook(title, author, genre, location, date, quantity);
+            clearFields();
             Controls.clearScreen();
             LayerManager.CatalogLayer = 0;
+            LayerManager.BookIndex = 0;
+            LayerManager.BookInput = 0;
             ListBooks();
             
             
-        } else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_EQUALS) {
+        } else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_N && LayerManager.CatalogLayer == 0) {
             Controls.clearScreen();
             LayerManager.CatalogLayer = 1;
             AddBook();
             
-        } else if ((e.getKeyCode() == NativeKeyEvent.VC_LEFT || e.getKeyCode() == NativeKeyEvent.VC_RIGHT) && LayerManager.CatalogLayer == 0) {
+        } else if (((e.getKeyCode() == NativeKeyEvent.VC_LEFT || e.getKeyCode() == NativeKeyEvent.VC_RIGHT)) && LayerManager.CatalogLayer == 0) {
             String keys = (e.getKeyCode() == NativeKeyEvent.VC_LEFT) ? "up" : "down";
             LayerManager.BookIndex = Controls.SelectMenu(keys, booksList.size(), LayerManager.BookIndex);
             ListBooks();
-        } else if ((e.getKeyCode() == NativeKeyEvent.VC_UP || e.getKeyCode() == NativeKeyEvent.VC_DOWN && LayerManager.CatalogLayer == 1) ) {
+        } else if (((e.getKeyCode() == NativeKeyEvent.VC_UP || e.getKeyCode() == NativeKeyEvent.VC_DOWN) && LayerManager.CatalogLayer == 1) ) {
             String keys = (e.getKeyCode() == NativeKeyEvent.VC_UP) ? "up" : "down";
             LayerManager.BookInput = Controls.SelectMenu(keys, 6, LayerManager.BookInput);
             AddBook();
@@ -73,7 +98,7 @@ public class Catalog {
     }
 
     public void CatalogNativeKeyTyped(NativeKeyEvent e) {
-		if (Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') { 
+		if ((Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') && LayerManager.CatalogLayer == 1) { 
             char keyChar = e.getKeyChar();
             if (NativeKeyEvent.getModifiersText(e.getModifiers()).contains("Shift")) {
                 keyChar = Character.toUpperCase(keyChar);
@@ -138,6 +163,16 @@ public class Catalog {
         Controls.PrintOptionInCenter("Quantity:             " + quantity, 150, LayerManager.BookInput == 5, 40);
 
     }
+
+    public void clearFields() {
+        title = "";
+        author = "";
+        genre = "";
+        location = "";
+        date = "";
+        quantity = "";
+    }
+    
 
     
 }

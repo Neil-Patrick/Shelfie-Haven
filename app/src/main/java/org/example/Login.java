@@ -7,8 +7,9 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import java.lang.Thread;
 public class Login implements NativeKeyListener {
 
-    String username = "";
-    String password = "";
+    //TODO: Alising to after magawa ang project.
+    String username = "admin";
+    String password = "admin";
 
     
 
@@ -30,6 +31,7 @@ public class Login implements NativeKeyListener {
         } else if (e.getKeyCode() != NativeKeyEvent.VC_ENTER && LayerManager.Login == 1) {
             Controls.clearScreen();
             LayerManager.Login = 0;
+            
             AsciiUIDesign.LoginUi(); 
 
         } else if ((e.getKeyCode() == NativeKeyEvent.VC_UP || e.getKeyCode() == NativeKeyEvent.VC_DOWN) && LayerManager.Login == 0) {
