@@ -12,8 +12,13 @@ public class Home {
             PrintHomeUI();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER) {
             switch (LayerManager.HomeOptions) {
+                case 1:
+                    App.currentEventState = Controls.EventState.CATALOG;
+                    Catalog.ListBooks();
+                    break;
                 case 4:
                     //Logout
+                    App.currentEventState = Controls.EventState.LOGIN;
                     Logout();
                     break;
             
@@ -35,8 +40,6 @@ public class Home {
     public void Logout() {
         Controls.clearScreen();
         LayerManager.Login = 0;
-        LayerManager.HomeOptions = 0;
-        App.currentEventState = Controls.EventState.LOGIN;
         //TODO: Add Threaded delay for logging out message
         App.login.PrintLoginUI();
     }

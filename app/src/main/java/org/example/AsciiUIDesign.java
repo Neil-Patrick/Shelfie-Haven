@@ -49,7 +49,13 @@ public class AsciiUIDesign {
                "╚═══════════════════════════════╝\n";
     } 
 
-
+    public static void BookCatalogUi() {
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                                    Book Catalog                                 ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+    }
     
 
 

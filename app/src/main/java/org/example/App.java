@@ -19,12 +19,11 @@ public class App implements NativeKeyListener {
 	public static EventState currentEventState = EventState.LOGIN; // Default state
 	public static Login login = new Login();
 	public static Home home = new Home();
+	public static Catalog catalog = new Catalog();
 
 
 
-    public static void main(String[] args) {
-		Queries.GetAllBooks();//TODO: remove this line after testing connection to database is successful 
-		
+    public static void main(String[] args) {		
         try {
 			GlobalScreen.registerNativeHook();
 		}
@@ -34,9 +33,24 @@ public class App implements NativeKeyListener {
 
 			System.exit(1);
 		}
-		//==================== Login ================================
 		GlobalScreen.addNativeKeyListener(new App());
-		login.PrintLoginUI();
+
+		//==================== Login ================================
+		
+			
+		switch (currentEventState) {
+			case LOGIN:
+			login.PrintLoginUI();
+			break;
+			case HOME:
+			Home.PrintHomeUI();
+				break;
+			case CATALOG:
+			Catalog.ListBooks();
+				break;
+			default:
+				break;
+		}
 		
 		
     }
@@ -48,6 +62,9 @@ public class App implements NativeKeyListener {
 				break;
 			case HOME:
 				home.HomeNativeKeyPressed(e);
+				break;
+			case CATALOG:
+				catalog.CatalogNativeKeyPressed(e);
 				break;
 			default:
 				break;

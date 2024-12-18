@@ -3,7 +3,7 @@ import org.fusesource.jansi.AnsiConsole;
 
 public class Controls {
     public enum EventState {
-        LOGIN, HOME
+        LOGIN, HOME, CATALOG
     }
 
     private static int windowWidth = 150;
