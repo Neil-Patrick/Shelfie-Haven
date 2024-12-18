@@ -134,6 +134,57 @@ public class Queries {
         }
     }
     
+    public static List<Books> GetSearchedBooks(String searchKeyword) {
+        List<Books> booksList = new ArrayList<>();
+        Connection connection = null;
+    
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+    
+            // Use a wildcard search for the keyword in all relevant columns
+            String query = "SELECT * FROM tbl_books WHERE " +
+                           "title LIKE ? OR " +
+                           "author LIKE ? OR " +
+                           "genre LIKE ? OR " +
+                           "location LIKE ? OR " +
+                           "date LIKE ? OR " +
+                           "quantity LIKE ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+    
+            // Add wildcards to the search keyword for partial matching
+            String searchPattern = "%" + searchKeyword + "%";
+            for (int i = 1; i <= 6; i++) {
+                preparedStatement.setString(i, searchPattern);
+            }
+    
+            // Execute the query
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            // Populate the list with Books objects
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
+                String genre = resultSet.getString("genre");
+                String location = resultSet.getString("location");
+                Date date = resultSet.getDate("date");
+                int quantity = resultSet.getInt("quantity");
+    
+                // Create a Books object and add it to the list
+                Books book = new Books(id, title, author, genre, location, date, quantity);
+                booksList.add(book);
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection
+            DatabaseConnector.closeConnection();
+        }
+        return booksList;
+    }
+    
 
     
 

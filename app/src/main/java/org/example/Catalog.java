@@ -18,6 +18,7 @@ public class Catalog {
         private String date = "";
         private String quantity = "";
 
+        private String search = "";
     public void CatalogNativeKeyPressed(NativeKeyEvent e) {
 
         if (e.getKeyCode() == NativeKeyEvent.VC_CONTROL) {
@@ -70,7 +71,6 @@ public class Catalog {
             Controls.clearScreen();
             AddBook();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 1) {
-            // TODO: Add book to database
             Queries.AddBook(title, author, genre, location, date, quantity);
             clearFields();
             Controls.clearScreen();
@@ -101,17 +101,53 @@ public class Catalog {
             System.out.println("Press Esc to cancel");
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 2) {
             Queries.DeleteBook(booksList.get(LayerManager.BookIndex).getId());
+            LayerManager.CatalogLayer = 0;
+            LayerManager.BookIndex = 0;
             ListBooks();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && LayerManager.CatalogLayer == 2) {
             Controls.clearScreen();
             LayerManager.CatalogLayer = 0;
+            LayerManager.BookIndex = 0;
             ListBooks();
+        }
+
+        else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_F && LayerManager.CatalogLayer == 0) {
+            Controls.clearScreen();
+            LayerManager.CatalogLayer = 3;
+            ShowSearchUI();
+            
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 3) {
+            Controls.clearScreen();
+            booksList = Queries.GetSearchedBooks(search);
+            LayerManager.CatalogLayer = 0;
+            LayerManager.BookIndex = 0;
+            search = "";
+            ListBooks(booksList);
+            
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_BACKSPACE && LayerManager.CatalogLayer == 3) {
+            try {
+                
+                    if (search.length() > 0) {
+                        search = search.substring(0, search.length() - 1);
+                    }
+                
+            } catch (StringIndexOutOfBoundsException f) {
+                System.out.println("You can't delete while it's already empty.");
+                try {
+                    // Add a 2-second delay
+                    Thread.sleep(1000);
+                } catch (InterruptedException g) {
+                    g.printStackTrace();
+                }
+            }
+            Controls.clearScreen();
+            ShowSearchUI();
         }
         
     }
 
     public void CatalogNativeKeyTyped(NativeKeyEvent e) {
-		if ((Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') && LayerManager.CatalogLayer == 1) { 
+		if ((Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') && LayerManager.CatalogLayer == 1 && !Controls.isCtrlPressed) { 
             char keyChar = e.getKeyChar();
             if (NativeKeyEvent.getModifiersText(e.getModifiers()).contains("Shift")) {
                 keyChar = Character.toUpperCase(keyChar);
@@ -135,11 +171,65 @@ public class Catalog {
             Controls.clearScreen();
             AddBook();
         }
+
+        if ((Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') && LayerManager.CatalogLayer == 3 && !Controls.isCtrlPressed) { 
+            char keyChar = e.getKeyChar();
+            if (NativeKeyEvent.getModifiersText(e.getModifiers()).contains("Shift")) {
+                keyChar = Character.toUpperCase(keyChar);
+            } else {
+                keyChar = Character.toLowerCase(keyChar);
+            }
+    
+            if (LayerManager.BookInput == 0) {
+                search += keyChar;
+            }
+            Controls.clearScreen();
+            ShowSearchUI();
+        }
 	}
 
     public void CatalogNativeKeyReleased(NativeKeyEvent e) {
         if (e.getKeyCode() == NativeKeyEvent.VC_CONTROL) {
             Controls.isCtrlPressed = false;
+        }
+    }
+
+    public static void ListBooks(List<Books> booksfound) {
+        Controls.clearScreen();
+        AsciiUIDesign.BookCatalogUi();
+    
+        booksList = booksfound;
+    
+        if (booksList.isEmpty()) {
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("No books found in the catalog.");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+        } else {
+            Controls.PrintInCenter("");
+            Controls.PrintOptionInCenter("ID:           " + booksList.get(LayerManager.BookIndex).getId(), 150, false, 40);
+            Controls.PrintOptionInCenter("Title:        " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 40);
+            Controls.PrintOptionInCenter("Author:       " + booksList.get(LayerManager.BookIndex).getAuthor(), 150, false, 40);
+            Controls.PrintOptionInCenter("Genre:        " + booksList.get(LayerManager.BookIndex).getGenre(), 150, false, 40);
+            Controls.PrintOptionInCenter("Location:     " + booksList.get(LayerManager.BookIndex).getlocation(), 150, false, 40);
+            Controls.PrintOptionInCenter("Date:         " + booksList.get(LayerManager.BookIndex).getDate(), 150, false, 40);
+            Controls.PrintOptionInCenter("Quantity:     " + booksList.get(LayerManager.BookIndex).getQuantity(), 150, false, 40);
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+    
+            String greenColor = "\033[32m";
+            String resetColor = "\033[0m";
+            Controls.PrintInCenter(greenColor + "<<< " + (LayerManager.BookIndex + 1) + "/" + (booksList.size()) + " >>>" + resetColor);
         }
     }
 
@@ -153,7 +243,7 @@ public class Catalog {
             Controls.PrintInCenter("");
             Controls.PrintInCenter("");
             Controls.PrintInCenter("");
-            Controls.PrintInCenter("No books available in the catalog.");
+            Controls.PrintInCenter("No books found in the catalog.");
             Controls.PrintInCenter("");
             Controls.PrintInCenter("");
             Controls.PrintInCenter("");
@@ -202,6 +292,11 @@ public class Catalog {
         location = "";
         date = "";
         quantity = "";
+    }
+
+    public void ShowSearchUI() {
+        Controls.clearScreen();
+        Controls.PrintOptionInCenter("Search:  " + search, 150, true, 40);
     }
     
 

@@ -11,7 +11,7 @@ public class LayerManager {
     
 
     public static int BookIndex = 0;
-    public static int CatalogLayer = 0; //All 0, add1 , delete 2, edit 3, find 4
+    public static int CatalogLayer = 0; //All 0, add1 , delete 2, find 3, edit 4
     public static int BookInput = 0; //Title 0, Author 1, Genre 2, Location 3, Date 4, Quantity 5
  
 
