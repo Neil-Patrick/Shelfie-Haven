@@ -150,6 +150,9 @@ public class Catalog {
         booksList = Queries.GetBooks();
     
         if (booksList.isEmpty()) {
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
             Controls.PrintInCenter("No books available in the catalog.");
             Controls.PrintInCenter("");
             Controls.PrintInCenter("");
