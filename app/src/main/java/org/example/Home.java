@@ -20,6 +20,11 @@ public class Home {
                     App.currentEventState = Controls.EventState.BORROW;
                     Catalog.ListBooks();
                     break;
+                case 3:
+                    App.currentEventState = Controls.EventState.BORROWEDLIST;
+                    BorrowedList.borrowers = Queries.GetBorrowers();
+                    BorrowedList.BorrowedBookListUi();
+                    break;
                 case 4:
                     //Logout
                     App.currentEventState = Controls.EventState.LOGIN;

@@ -35,12 +35,12 @@ public class AsciiUIDesign {
     }
     public static String SearchAndBorrow() {
         return "╔═══════════════════════════════╗\n" +
-               "║       Search And Borrow       ║\n" +
+               "║           Borrow Book         ║\n" +
                "╚═══════════════════════════════╝\n";
     }
     public static String BorrowBookStatus() {
         return "╔═══════════════════════════════╗\n" +
-               "║      Borrowed Book Status     ║\n" +
+               "║       Borrowed Book List      ║\n" +
                "╚═══════════════════════════════╝\n";
     } 
     public static String Logout() {
@@ -71,11 +71,11 @@ public class AsciiUIDesign {
         Controls.PrintInCenter("");
         Controls.PrintInCenter("");
     }
+   
     public static void BorrowBookUi() {
         Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
-        Controls.PrintInCenter("║                                      Borrow Book                                ║");
+        Controls.PrintInCenter("║                                  Borrowed Book List                             ║");
         Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
-        Controls.PrintInCenter("");
         Controls.PrintInCenter("");
     }
 

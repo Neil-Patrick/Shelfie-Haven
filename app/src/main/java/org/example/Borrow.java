@@ -260,7 +260,7 @@ public class Borrow implements NativeKeyListener {
 
     public void UploadToDatabase() {
        
-        boolean success = Queries.AddBorrower(Fname, Mname, Lname, booksList.get(LayerManager.BookIndex).getId(), dateBorrowed, false);
+        boolean success = Queries.AddBorrower(Fname, Mname, Lname, booksList.get(LayerManager.BookIndex).getId(), dateBorrowed, booksList.get(LayerManager.BookIndex).getTitle());
         
         if (success) {
             AsciiUIDesign.SuccessfulProcess();

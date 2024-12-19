@@ -23,7 +23,7 @@ public class App implements NativeKeyListener {
 	public static Home home = new Home();
 	public static Catalog catalog = new Catalog();
 	public static Borrow borrow = new Borrow();
-	
+	public static BorrowedList borrowedList = new BorrowedList();
 
     public static void main(String[] args) {	
 		// Scanner scanner = new Scanner(System.in);
@@ -52,12 +52,15 @@ public class App implements NativeKeyListener {
 			login.PrintLoginUI();
 			break;
 			case HOME:
-			Home.PrintHomeUI();
+				Home.PrintHomeUI();
 				break;
 			case CATALOG:
-			Catalog.ListBooks();
+				Catalog.ListBooks();
 			case BORROW:
-			Catalog.ListBooks();
+				Catalog.ListBooks();
+				break;
+			case BORROWEDLIST:
+				BorrowedList.BorrowedBookListUi();
 				break;
 			default:
 				break;
@@ -80,6 +83,9 @@ public class App implements NativeKeyListener {
 				break;
 			case BORROW:
 				borrow.BorrowNativeKeyPressed(e);
+				break;
+			case BORROWEDLIST:
+				borrowedList.BorrowedBookListNativeKeyPressed(e);
 				break;
 			default:
 				break;

@@ -230,7 +230,7 @@ public class Queries {
     }
     
 
-    public static boolean AddBorrower(String firstName, String middleName, String lastName, int bookId, Date dateBorrowed, boolean isReturned) {
+    public static boolean AddBorrower(String firstName, String middleName, String lastName, int bookId, Date dateBorrowed, String title) {
         Connection connection = null;
         boolean isAdded = false;
     
@@ -251,7 +251,7 @@ public class Queries {
                 int quantity = resultSet.getInt("quantity");
     
                 // Insert borrower details into tbl_borrower
-                String insertQuery = "INSERT INTO tbl_borrower (first_name, middle_name, last_name, book_id, date_borrowed, isReturned) VALUES (?, ?, ?, ?, ?, ?)";
+                String insertQuery = "INSERT INTO tbl_borrower (first_name, middle_name, last_name, book_id, date_borrowed, title) VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
     
                 insertStatement.setString(1, firstName);
@@ -259,7 +259,7 @@ public class Queries {
                 insertStatement.setString(3, lastName);
                 insertStatement.setInt(4, bookId);
                 insertStatement.setDate(5, new java.sql.Date(dateBorrowed.getTime()));
-                insertStatement.setBoolean(6, isReturned);
+                insertStatement.setString(6, title);
     
                 int rowsInserted = insertStatement.executeUpdate();
     
@@ -297,6 +297,108 @@ public class Queries {
     
         return isAdded;
     }
+    
+    public static List<Borrower> GetBorrowers() {
+        List<Borrower> borrowers = new ArrayList<>();
+        Connection connection = null;
+
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+
+            // Query to get all borrowers
+            String query = "SELECT id, first_name, middle_name, last_name, book_id, date_borrowed, title FROM tbl_borrower";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Loop through the result set and populate the Borrower list
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstName = resultSet.getString("first_name");
+                String middleName = resultSet.getString("middle_name");
+                String lastName = resultSet.getString("last_name");
+                int bookId = resultSet.getInt("book_id");
+                Date dateBorrowed = resultSet.getDate("date_borrowed");
+                String title = resultSet.getString("title");
+
+                Borrower borrower = new Borrower(id, firstName, middleName, lastName, bookId, dateBorrowed, title);
+                borrowers.add(borrower);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection
+            DatabaseConnector.closeConnection();
+        }
+
+        return borrowers;
+    }
+
+    public static boolean ReturnBook(Borrower borrower) {
+        Connection connection = null;
+        boolean isReturned = false;
+    
+        int bookId = borrower.getBookId();
+        int borrowerId = borrower.getId(); // Assuming there's a method to get the borrower's ID
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+    
+            // Start transaction
+            connection.setAutoCommit(false);
+    
+            // Check if the book exists in the tbl_books table
+            String checkQuery = "SELECT quantity FROM tbl_books WHERE id = ?";
+            PreparedStatement checkStatement = connection.prepareStatement(checkQuery);
+            checkStatement.setInt(1, bookId);
+            ResultSet resultSet = checkStatement.executeQuery();
+    
+            if (resultSet.next()) {
+                int quantity = resultSet.getInt("quantity");
+    
+                // Delete the borrower from the tbl_borrower table
+                String deleteQuery = "DELETE FROM tbl_borrower WHERE id = ?";
+                PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery);
+                deleteStatement.setInt(1, borrowerId);
+                int rowsDeleted = deleteStatement.executeUpdate();
+    
+                // Update the book quantity in tbl_books if the borrower is deleted
+                if (rowsDeleted > 0) {
+                    String updateQuery = "UPDATE tbl_books SET quantity = ? + 1 WHERE id = ?";
+                    PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+                    updateStatement.setInt(1, quantity); // Increase the quantity by 1
+                    updateStatement.setInt(2, bookId);
+    
+                    int rowsUpdated = updateStatement.executeUpdate();
+    
+                    if (rowsUpdated > 0) {
+                        isReturned = true;
+                    }
+                }
+            }
+    
+            // Commit transaction
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+        } finally {
+            // Close the connection
+            DatabaseConnector.closeConnection();
+        }
+    
+        return isReturned;
+    }
+    
     
 
 }

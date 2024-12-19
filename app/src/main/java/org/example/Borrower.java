@@ -8,16 +8,16 @@ public class Borrower {
     private String lName;
     private int bookId;
     private Date dateBorrowed;
-    private boolean isReturned;
+    private String title;
 
-    public Borrower(int id, String fName, String mName, String lName, int bookId, Date dateBorrowed, boolean isReturned) {
+    public Borrower(int id, String fName, String mName, String lName, int bookId, Date dateBorrowed, String title) {
         this.id = id;
         this.fName = fName;
         this.mName = mName;
         this.lName = lName;
         this.bookId = bookId;
         this.dateBorrowed = dateBorrowed;
-        this.isReturned = isReturned;
+        this.title = title;
     }
 
     public int getId() {
@@ -44,9 +44,13 @@ public class Borrower {
         return dateBorrowed;
     }
 
-    public boolean getIsReturned() {
-        return isReturned;
+    public String getTitle() {
+        return title;
     }
 
-    
+    public String getName() {
+        return fName + " " + mName + " " + lName;
+    }
+
+
 }

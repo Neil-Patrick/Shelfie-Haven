@@ -17,4 +17,7 @@ public class LayerManager {
     public static int searchLayer = 0;  
     public static int nameInput = 0; // First Name 0, Middle Name 1, Last Name 2  
 
+    public static int BorrowedListLayer = 0; //List Borrowers 0, Return Confirmation  1
+    public static int currentPage = 0; //
+    public static int currentSelection = 0; //
 }
