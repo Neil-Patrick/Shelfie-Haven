@@ -29,7 +29,7 @@ public class Catalog {
             LayerManager.HomeOptions = 0;
             Home.PrintHomeUI();
             
-        } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && LayerManager.CatalogLayer == 1) {
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && (LayerManager.CatalogLayer == 1 || LayerManager.CatalogLayer == 3)) {
             LayerManager.CatalogLayer = 0;
             ListBooks();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_BACKSPACE && LayerManager.CatalogLayer == 1) {
