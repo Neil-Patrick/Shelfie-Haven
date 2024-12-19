@@ -1,5 +1,7 @@
 package org.example;
 
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 
 public class Home {
@@ -12,6 +14,10 @@ public class Home {
             PrintHomeUI();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER) {
             switch (LayerManager.HomeOptions) {
+                case 0:
+                    App.currentEventState = Controls.EventState.STATUS;
+                    App.status.PrintStatusUI();
+                    break;
                 case 1:
                     App.currentEventState = Controls.EventState.CATALOG;
                     Catalog.ListBooks();
@@ -26,9 +32,7 @@ public class Home {
                     BorrowedList.BorrowedBookListUi();
                     break;
                 case 4:
-                    //Logout
-                    App.currentEventState = Controls.EventState.LOGIN;
-                    Logout();
+                    Exit();
                     break;
             
                 default:
@@ -46,11 +50,16 @@ public class Home {
         Controls.PrintOptionInCenter(AsciiUIDesign.Logout(), LayerManager.HomeOptions, LayerManager.HomeOptions == 4, 60);
     }
 
-    public void Logout() {
-        Controls.clearScreen();
-        LayerManager.Login = 0;
-        //TODO: Add Threaded delay for logging out message
-        App.login.PrintLoginUI();
+    public void Exit() {
+                try {
+                    GlobalScreen.unregisterNativeHook();
+                } catch (NativeHookException nativeHookException) {
+                    nativeHookException.printStackTrace();
+                }
+
+                //TODO: Add logout confirmation muna dito
+                System.exit(0); 
+        
     }
 
     

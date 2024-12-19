@@ -399,6 +399,62 @@ public class Queries {
         return isReturned;
     }
     
+
+    public static int CountBooks() {
+        Connection connection = null;
+        int count = 0;
+    
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+    
+            // Query to count the number of books in tbl_books
+            String query = "SELECT COUNT(*) FROM tbl_books";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+    
+            // Get the count from the result set
+            if (resultSet.next()) {
+                count = resultSet.getInt(1); // The count is the first column in the result
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection
+            DatabaseConnector.closeConnection();
+        }
+    
+        return count;
+    }
+    public static int CountBorrowedBooks() {
+        Connection connection = null;
+        int count = 0;
+    
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+    
+            // Query to count the number of books in tbl_books
+            String query = "SELECT COUNT(*) FROM tbl_borrower";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+    
+            // Get the count from the result set
+            if (resultSet.next()) {
+                count = resultSet.getInt(1); // The count is the first column in the result
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection
+            DatabaseConnector.closeConnection();
+        }
+    
+        return count;
+    }
+    
     
 
 }

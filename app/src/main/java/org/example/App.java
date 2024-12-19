@@ -17,9 +17,9 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
 public class App implements NativeKeyListener {
-	public static EventState currentEventState = EventState.LOGIN; // Default state
+	public static EventState currentEventState = EventState.HOME; // Default state
 	public static App app = new App();
-	public static Login login = new Login();
+	public static Status status = new Status();
 	public static Home home = new Home();
 	public static Catalog catalog = new Catalog();
 	public static Borrow borrow = new Borrow();
@@ -48,9 +48,9 @@ public class App implements NativeKeyListener {
 		
 			
 		switch (currentEventState) {
-			case LOGIN:
-			login.PrintLoginUI();
-			break;
+			case STATUS:
+				status.PrintStatusUI();
+				break;
 			case HOME:
 				Home.PrintHomeUI();
 				break;
@@ -72,8 +72,8 @@ public class App implements NativeKeyListener {
 
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		switch (currentEventState) {
-			case LOGIN:
-				login.LoginNativeKeyPressed(e);
+			case STATUS:
+				status.StatusNativeKeyPressed(e);
 				break;
 			case HOME:
 				home.HomeNativeKeyPressed(e);
@@ -107,10 +107,6 @@ public class App implements NativeKeyListener {
 
 	public void nativeKeyTyped(NativeKeyEvent e) {
 		switch (currentEventState) {
-			case LOGIN:
-				login.LoginnativeKeyTyped(e);
-				break;
-			//walang home kasi walang key typed sa home
 			case CATALOG:
 				catalog.CatalogNativeKeyTyped(e);
 				break;

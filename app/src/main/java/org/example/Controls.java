@@ -3,7 +3,7 @@ import org.fusesource.jansi.AnsiConsole;
 
 public class Controls {
     public enum EventState {
-        LOGIN, HOME, CATALOG, BORROW, BORROWEDLIST
+        STATUS, HOME, CATALOG, BORROW, BORROWEDLIST
     }
 
     public static boolean isCtrlPressed = false;

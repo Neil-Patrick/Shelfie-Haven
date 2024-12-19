@@ -45,9 +45,17 @@ public class AsciiUIDesign {
     } 
     public static String Logout() {
         return "╔═══════════════════════════════╗\n" +
-               "║              Logout           ║\n" +
+               "║              Exit             ║\n" +
                "╚═══════════════════════════════╝\n";
     } 
+
+    public static void BookStatusUi() {
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                                   Library Status                                ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+    }
 
     public static void BookCatalogUi() {
         Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
