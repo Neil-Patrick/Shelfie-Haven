@@ -20,7 +20,7 @@ public class App implements NativeKeyListener {
 	public static Login login = new Login();
 	public static Home home = new Home();
 	public static Catalog catalog = new Catalog();
-
+	public static Borrow borrow = new Borrow();
 
 
     public static void main(String[] args) {		
@@ -47,6 +47,8 @@ public class App implements NativeKeyListener {
 				break;
 			case CATALOG:
 			Catalog.ListBooks();
+			case BORROW:
+			Catalog.ListBooks();
 				break;
 			default:
 				break;
@@ -66,6 +68,9 @@ public class App implements NativeKeyListener {
 			case CATALOG:
 				catalog.CatalogNativeKeyPressed(e);
 				break;
+			case BORROW:
+				borrow.BorrowNativeKeyPressed(e);
+				break;
 			default:
 				break;
 		}
@@ -75,6 +80,9 @@ public class App implements NativeKeyListener {
 		switch (currentEventState) {
 			case CATALOG:
 				catalog.CatalogNativeKeyReleased(e);
+				break;
+			case BORROW:
+				borrow.BorrowNativeKeyReleased(e);
 				break;
 			default:
 				break;
@@ -89,6 +97,9 @@ public class App implements NativeKeyListener {
 			//walang home kasi walang key typed sa home
 			case CATALOG:
 				catalog.CatalogNativeKeyTyped(e);
+				break;
+			case BORROW:
+				borrow.BorrowNativeKeyTyped(e);
 				break;
 			default:
 				break;
