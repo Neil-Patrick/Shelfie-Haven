@@ -71,23 +71,44 @@ public class AsciiUIDesign {
         Controls.PrintInCenter("");
         Controls.PrintInCenter("");
     }
+    public static void LoginGuideUI(){
+        Controls.PrintInCenter("╔════════════════════════╗");
+        Controls.PrintInCenter("║  [Up & Down]  Navigate ║");
+        Controls.PrintInCenter("║  [Enter]      Login    ║");
+        Controls.PrintInCenter("║  [Esc]        Back     ║");
+        Controls.PrintInCenter("╚════════════════════════╝");
+    }
     public static void MenuGuideUI(){
-        Controls.PrintInCenter("╔═══════════════════════╗");
-        Controls.PrintInCenter("║  [Up & Down]  Select  ║");
-        Controls.PrintInCenter("║  [Enter]      Confirm ║");
-        Controls.PrintInCenter("╚═══════════════════════╝");
+        Controls.PrintInCenter("╔════════════════════════╗");
+        Controls.PrintInCenter("║  [Up & Down]  Navigate ║");
+        Controls.PrintInCenter("║  [Enter]      Confirm  ║");
+        Controls.PrintInCenter("╚════════════════════════╝");
        
     }
     public static void BookCatalogGuideUI(){
         Controls.PrintInCenter("╔════════════════════════════════════╗");
         Controls.PrintInCenter("║ [Left & Right]        Browse       ║");
-        Controls.PrintInCenter("║ [CTRL + Shift + (+)]  Add Book     ║");
+        Controls.PrintInCenter("║ [CTRL + n]            Add Book     ║");
+        Controls.PrintInCenter("║ [CTRL + b]            Search       ║");
         Controls.PrintInCenter("║ [Up & Down]           Add Book Nav ║");
-        Controls.PrintInCenter("║ [Backspace/Del]       Remove       ║");
-        Controls.PrintInCenter("║ [Enter]               Confirm      ║");
+        Controls.PrintInCenter("║ [Del]                 Delete Book  ║");
+        Controls.PrintInCenter("║ [Enter]               Edit         ║");
         Controls.PrintInCenter("║ [Esc]                 Back         ║");
         Controls.PrintInCenter("╚════════════════════════════════════╝");
         
+    }
+    public static void AddBookGuideUI(){
+        Controls.PrintInCenter("╔═══════════════════════╗");
+        Controls.PrintInCenter("║  [Up & Down]  Browse  ║");
+        Controls.PrintInCenter("║  [Enter]      Save    ║");
+        Controls.PrintInCenter("╚═══════════════════════╝");
+    }
+
+    public static void SearchGuideUI(){
+        Controls.PrintInCenter("╔════════════════════╗");
+        Controls.PrintInCenter("║  [Enter]   Confirm ║");
+        Controls.PrintInCenter("║  [Esc]     Back    ║");
+        Controls.PrintInCenter("╚════════════════════╝");
     }
     
 
