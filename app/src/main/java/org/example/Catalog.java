@@ -39,6 +39,7 @@ public class Catalog {
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && (LayerManager.CatalogLayer == 1 || LayerManager.CatalogLayer == 3 || LayerManager.CatalogLayer == 4)) {
             LayerManager.CatalogLayer = 0;
             LayerManager.BookInput = 0;
+            clearFields();
             ListBooks();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_BACKSPACE && (LayerManager.CatalogLayer == 1 || LayerManager.CatalogLayer == 4)) {
             try {
