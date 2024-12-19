@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import org.checkerframework.checker.units.qual.A;
+
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
@@ -48,7 +50,7 @@ public class Borrow implements NativeKeyListener {
                         ShowConfirmation();
                         break;
                     case 3:
-                        //TODO: UploadToDatabase(); aaaaaaaaaaaaaaaaaaaaaaaa
+                        UploadToDatabase();
                     default:
                         break;
                 }
@@ -256,9 +258,34 @@ public class Borrow implements NativeKeyListener {
         ListBooks();
     }
 
+    public void UploadToDatabase() {
+       
+        boolean success = Queries.AddBorrower(Fname, Mname, Lname, booksList.get(LayerManager.BookIndex).getId(), dateBorrowed, false);
+        
+        if (success) {
+            AsciiUIDesign.SuccessfulProcess();
+            try {
+                Thread.sleep(1000); // 1-second delay
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AsciiUIDesign.FailedProcess();
+            try {
+                Thread.sleep(1000); // 1-second delay
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        LayerManager.BorrowLayer = 0;
+        LayerManager.BookIndex = 0;
+        booksList = Queries.GetBooks();
+        Borrow.ListBooks();
+    }
+    
+
     public void ShowConfirmation() {
         LayerManager.BorrowLayer = 3;
-        LayerManager.BookIndex = 0;
         Controls.clearScreen();
         AsciiUIDesign.BorrowBookUi();
         Controls.PrintOptionInCenter("Title :  " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 40);
@@ -290,6 +317,7 @@ public class Borrow implements NativeKeyListener {
         Controls.PrintOptionInCenter("Title :  " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 40);
         Controls.PrintOptionInCenter("Author :  " + booksList.get(LayerManager.BookIndex).getAuthor(), 150, false, 40);
         Controls.PrintOptionInCenter("Date Borrowed :  " + dateBorrowed.toString(), 150, false, 40);
+        Controls.PrintOptionInCenter("Quantity :  " +  booksList.get(LayerManager.BookIndex).getQuantity(), 150, false, 40);
         Controls.PrintOptionInCenter("", 150, false, 40);
         Controls.PrintOptionInCenter("", 150, false, 40);
         Controls.PrintOptionInCenter("", 150, false, 40);
@@ -333,5 +361,7 @@ public class Borrow implements NativeKeyListener {
             Controls.PrintInCenter(greenColor + "<<< " + (LayerManager.BookIndex + 1) + "/" + (booksList.size()) + " >>>" + resetColor);
         }
     }
+
+
 
 }

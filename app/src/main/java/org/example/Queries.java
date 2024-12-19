@@ -230,4 +230,73 @@ public class Queries {
     }
     
 
+    public static boolean AddBorrower(String firstName, String middleName, String lastName, int bookId, Date dateBorrowed, boolean isReturned) {
+        Connection connection = null;
+        boolean isAdded = false;
+    
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+    
+            // Start transaction
+            connection.setAutoCommit(false);
+    
+            // Check if the book quantity is greater than 0
+            String checkQuery = "SELECT quantity FROM tbl_books WHERE id = ? AND quantity > 0";
+            PreparedStatement checkStatement = connection.prepareStatement(checkQuery);
+            checkStatement.setInt(1, bookId);
+            ResultSet resultSet = checkStatement.executeQuery();
+    
+            if (resultSet.next()) {
+                int quantity = resultSet.getInt("quantity");
+    
+                // Insert borrower details into tbl_borrower
+                String insertQuery = "INSERT INTO tbl_borrower (first_name, middle_name, last_name, book_id, date_borrowed, isReturned) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+    
+                insertStatement.setString(1, firstName);
+                insertStatement.setString(2, middleName);
+                insertStatement.setString(3, lastName);
+                insertStatement.setInt(4, bookId);
+                insertStatement.setDate(5, new java.sql.Date(dateBorrowed.getTime()));
+                insertStatement.setBoolean(6, isReturned);
+    
+                int rowsInserted = insertStatement.executeUpdate();
+    
+                // Update the quantity in tbl_books
+                if (rowsInserted > 0) {
+                    String updateQuery = "UPDATE tbl_books SET quantity = ? - 1 WHERE id = ?";
+                    PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+                    updateStatement.setInt(1, quantity);
+                    updateStatement.setInt(2, bookId);
+    
+                    int rowsUpdated = updateStatement.executeUpdate();
+    
+                    if (rowsUpdated > 0) {
+                        isAdded = true;
+                    }
+                }
+    
+                // Commit transaction
+                connection.commit();
+            } 
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+        } finally {
+            // Close the connection
+            DatabaseConnector.closeConnection();
+        }
+    
+        return isAdded;
+    }
+    
+
 }
