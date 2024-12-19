@@ -15,5 +15,6 @@ public class LayerManager {
  
     public static int BorrowLayer = 0; //ShowBooks 0, Search 1, Enter Name 2, Confirm 3
     public static int searchLayer = 0;  
+    public static int nameInput = 0; // First Name 0, Middle Name 1, Last Name 2  
 
 }

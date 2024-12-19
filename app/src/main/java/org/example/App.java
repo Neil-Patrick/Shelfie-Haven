@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 import org.example.Controls.EventState;
 
@@ -17,13 +18,21 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
 public class App implements NativeKeyListener {
 	public static EventState currentEventState = EventState.LOGIN; // Default state
+	public static App app = new App();
 	public static Login login = new Login();
 	public static Home home = new Home();
 	public static Catalog catalog = new Catalog();
 	public static Borrow borrow = new Borrow();
+	
 
-
-    public static void main(String[] args) {		
+    public static void main(String[] args) {	
+		// Scanner scanner = new Scanner(System.in);
+		// //==================== Registering Global Key Listener ================================
+		// System.out.println("Press Enter to start the program");
+		// scanner.nextLine();
+		//TODO: Proof na pede gumamit ng scanner pero before magregister ng global key listener dapat
+		// So ang solution kapag need ng scanner is maggawa ng login using scanner then aalisin na yung isang login
+		//================================================================================================
         try {
 			GlobalScreen.registerNativeHook();
 		}
@@ -33,7 +42,7 @@ public class App implements NativeKeyListener {
 
 			System.exit(1);
 		}
-		GlobalScreen.addNativeKeyListener(new App());
+		GlobalScreen.addNativeKeyListener(app);
 
 		//==================== Login ================================
 		
@@ -53,6 +62,7 @@ public class App implements NativeKeyListener {
 			default:
 				break;
 		}
+		
 		
 		
     }
@@ -105,6 +115,5 @@ public class App implements NativeKeyListener {
 				break;
 		}
 	}
-
 	
 }

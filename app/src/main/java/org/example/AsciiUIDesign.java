@@ -71,6 +71,13 @@ public class AsciiUIDesign {
         Controls.PrintInCenter("");
         Controls.PrintInCenter("");
     }
+    public static void BorrowBookUi() {
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                                      Borrow Book                                ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+    }
     public static void LoginGuideUI(){
         Controls.PrintInCenter("╔════════════════════════╗");
         Controls.PrintInCenter("║  [Up & Down]  Navigate ║");

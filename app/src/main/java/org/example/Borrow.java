@@ -1,26 +1,54 @@
 package org.example;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Scanner;
 
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
-public class Borrow {
+public class Borrow implements NativeKeyListener {
 
     private static List<Books> booksList = Queries.GetBooks();
 
     public String searchString = "";
+    public static String Fname = "";
+    public static String Mname = "";
+    public static String Lname = "";
+    public static Date dateBorrowed = new Date(System.currentTimeMillis());
+
     public void BorrowNativeKeyPressed(NativeKeyEvent e) {
         switch (e.getKeyCode()) {
             case NativeKeyEvent.VC_CONTROL:
                 Controls.isCtrlPressed = true;
                 break;
+            case NativeKeyEvent.VC_BACKSPACE:
+                switch (LayerManager.BorrowLayer) {
+                    case 1:
+                        BackspaceSearch();
+                        break;
+                    case 2:
+                        BackspaceName();
+                        break;
+                    default:
+                        break;
+                }
+                break;
             case NativeKeyEvent.VC_ENTER:
                 switch (LayerManager.BorrowLayer) {
+                    case 0:
+                        GetFullName();
+                        break;
                     case 1:
                         EnterSearchedKeyword();
                         break;
-                    case 2:
+                    case 2: 
+                        ShowConfirmation();
                         break;
+                    case 3:
+                        //TODO: UploadToDatabase(); aaaaaaaaaaaaaaaaaaaaaaaa
                     default:
                         break;
                 }
@@ -32,6 +60,12 @@ public class Borrow {
                         break;
                     case 1:
                         GotoBorrow();
+                    case 2:
+                        GotoBorrow();
+                        break;
+                    case 3:
+                        GetFullName();
+                        break;
                     default:
                         break;
                 }
@@ -57,11 +91,37 @@ public class Borrow {
                         break;
                 }
                 break;
-            
-            case NativeKeyEvent.VC_F:
-                if (Controls.isCtrlPressed) {
-                    GotoSearch();
+            case NativeKeyEvent.VC_UP:
+                switch (LayerManager.BorrowLayer) {
+                    case 2:
+                        SelectNameInput(e);
+                        break;
+                
+                    default:
+                        break;
+                }
+                break;
 
+            case NativeKeyEvent.VC_DOWN:
+                switch (LayerManager.BorrowLayer) {
+                    case 2:
+                        SelectNameInput(e);
+                        break;
+                
+                    default:
+                        break;
+                }
+                break;
+            case NativeKeyEvent.VC_F:
+                switch (LayerManager.BorrowLayer) {
+                    case 0:
+                        if (Controls.isCtrlPressed) {
+                            GotoSearch();
+                        }
+                        break;
+                
+                    default:
+                        break;
                 }
                 break;
             default:
@@ -85,18 +145,48 @@ public class Borrow {
                 TypeSearch(e);
                 break;
             case 2:// nasa enter name part
-
+                TypeName(e);
                 break;
             default:
                 break;
         }
     }
 
+    public void BackspaceSearch() {
+        if (searchString.length() > 0) {
+            searchString = searchString.substring(0, searchString.length() - 1);
+            GotoSearch();
+        }
+    }
+    public void BackspaceName() {
+        if (LayerManager.nameInput == 0) {
+            if (Fname.length() > 0) {
+                Fname = Fname.substring(0, Fname.length() - 1);
+            }
+        } else if (LayerManager.nameInput == 1) {
+            if (Mname.length() > 0) {
+                Mname = Mname.substring(0, Mname.length() - 1);
+            }
+        } else if (LayerManager.nameInput == 2) {
+            if (Lname.length() > 0) {
+                Lname = Lname.substring(0, Lname.length() - 1);
+            }
+        }
+        GetFullName();
+    }
     public static void Select(NativeKeyEvent e) {
         Controls.clearScreen();
         String keys = (e.getKeyCode() == NativeKeyEvent.VC_LEFT) ? "up" : "down";
         LayerManager.BookIndex = Controls.SelectMenu(keys, booksList.size(), LayerManager.BookIndex);
         Borrow.ListBooks();
+
+    }
+
+    public static void SelectNameInput(NativeKeyEvent e) {
+        Controls.clearScreen();
+        String keys = (e.getKeyCode() == NativeKeyEvent.VC_UP) ? "up" : "down";
+        LayerManager.nameInput = Controls.SelectMenu(keys, 3, LayerManager.nameInput);
+        Borrow.GetFullName();
 
     }
 
@@ -116,8 +206,29 @@ public class Borrow {
         }
     }
 
+    public void TypeName(NativeKeyEvent e) {
+        if ((Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') && !Controls.isCtrlPressed) { 
+            char keyChar = e.getKeyChar();
+            if (NativeKeyEvent.getModifiersText(e.getModifiers()).contains("Shift")) {
+                keyChar = Character.toUpperCase(keyChar);
+            } else {
+                keyChar = Character.toLowerCase(keyChar);
+            }
+    
+            if (LayerManager.nameInput == 0) {
+                Fname += keyChar;
+            } else if (LayerManager.nameInput == 1) {
+                Mname += keyChar;
+            } else if (LayerManager.nameInput == 2) {
+                Lname += keyChar;
+            }
+            GetFullName();
+        }
+    }
+
     public void GotoBorrow() {
         LayerManager.BorrowLayer = 0;
+        clearFields();
         booksList = Queries.GetBooks();
         Borrow.ListBooks();
     }
@@ -139,14 +250,56 @@ public class Borrow {
 
     public void EnterSearchedKeyword() {
         LayerManager.BorrowLayer = 0;
+        LayerManager.BookIndex = 0;
         Controls.clearScreen();
         booksList = Queries.GetSearchedBooks(searchString);
         ListBooks();
     }
 
+    public void ShowConfirmation() {
+        LayerManager.BorrowLayer = 3;
+        LayerManager.BookIndex = 0;
+        Controls.clearScreen();
+        AsciiUIDesign.BorrowBookUi();
+        Controls.PrintOptionInCenter("Title :  " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 40);
+        Controls.PrintOptionInCenter("Author :  " + booksList.get(LayerManager.BookIndex).getAuthor(), 150, false, 40);
+        Controls.PrintOptionInCenter("Date Borrowed :  " + dateBorrowed.toString(), 150, false, 40);
+        Controls.PrintOptionInCenter("", 150, false, 40);
+        Controls.PrintOptionInCenter("", 150, false, 40);
+        Controls.PrintOptionInCenter("", 150, false, 40);
+        Controls.PrintOptionInCenter("First Name:  " + Fname, 150, false, 40);
+        Controls.PrintOptionInCenter("Middle Name:  " + Mname, 150, false, 40);
+        Controls.PrintOptionInCenter("Last Name:  " + Lname, 150, false, 40);
+        Controls.PrintOptionInCenter("", 150, false, 40);
+        Controls.PrintOptionInCenter("", 150, false, 40);
+        Controls.PrintOptionInCenter("Review your inputs.", 150, false, 40);
+        AsciiUIDesign.SearchGuideUI();
+    }
+    public void clearFields() {
+        searchString = "";
+        Fname = "";
+        Mname = "";
+        Lname = "";
+    }
+
+    public static void GetFullName() {
+        LayerManager.BorrowLayer = 2;
+        Controls.clearScreen();
+        AsciiUIDesign.BorrowBookUi();
+        
+        Controls.PrintOptionInCenter("Title :  " + booksList.get(LayerManager.BookIndex).getTitle(), 150, false, 40);
+        Controls.PrintOptionInCenter("Author :  " + booksList.get(LayerManager.BookIndex).getAuthor(), 150, false, 40);
+        Controls.PrintOptionInCenter("Date Borrowed :  " + dateBorrowed.toString(), 150, false, 40);
+        Controls.PrintOptionInCenter("", 150, false, 40);
+        Controls.PrintOptionInCenter("", 150, false, 40);
+        Controls.PrintOptionInCenter("", 150, false, 40);
+        Controls.PrintOptionInCenter("First Name:  " + Fname, 150, LayerManager.nameInput == 0, 40);
+        Controls.PrintOptionInCenter("Middle Name:  " + Mname, 150, LayerManager.nameInput == 1, 40);
+        Controls.PrintOptionInCenter("Last Name:  " + Lname, 150, LayerManager.nameInput == 2, 40);
+    }
     public static void ListBooks() {
         Controls.clearScreen();
-        AsciiUIDesign.BookCatalogUi();
+        AsciiUIDesign.BorrowBookUi();
     
         if (booksList.isEmpty()) {
             Controls.PrintInCenter("");
