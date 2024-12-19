@@ -1,7 +1,14 @@
 package org.example;
 
 import java.io.Console;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+
+import javax.management.QueryEval;
+import javax.swing.text.LayeredHighlighter;
+import javax.swing.text.LayeredHighlighter.LayerPainter;
 
 import org.checkerframework.checker.units.qual.g;
 
@@ -33,7 +40,7 @@ public class Catalog {
             LayerManager.CatalogLayer = 0;
             LayerManager.BookInput = 0;
             ListBooks();
-        } else if (e.getKeyCode() == NativeKeyEvent.VC_BACKSPACE && LayerManager.CatalogLayer == 1) {
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_BACKSPACE && (LayerManager.CatalogLayer == 1 || LayerManager.CatalogLayer == 4)) {
             try {
                 if (LayerManager.BookInput == 0) {
                     if (title.length() > 0) {
@@ -70,7 +77,11 @@ public class Catalog {
                 }
             }
             Controls.clearScreen();
-            AddBook();
+            if (LayerManager.CatalogLayer == 1) {
+                AddBook();
+            } else if (LayerManager.CatalogLayer == 4) {
+                UpdateBook();
+            }
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 1) {
             Queries.AddBook(title, author, genre, location, date, quantity);
             clearFields();
@@ -81,7 +92,29 @@ public class Catalog {
             ListBooks();
             
             
-        } else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_N && LayerManager.CatalogLayer == 0) {
+        } 
+        // Update book
+        else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 4) {
+            Controls.clearScreen();
+            LayerManager.CatalogLayer = 0;
+            boolean success = Queries.UpdateBook(CreateUpdatedBook());
+            if (success) {
+                System.out.println("Book updated successfully.");
+            } else {
+                System.out.println("Book update failed.");
+                
+            }
+            try {
+                // Add a 2-second delay
+                Thread.sleep(1000);
+            } catch (InterruptedException g) {
+                g.printStackTrace();
+            }
+            ListBooks();
+
+        } 
+        
+        else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_N && LayerManager.CatalogLayer == 0) {
             Controls.clearScreen();
             LayerManager.CatalogLayer = 1;
             AddBook();
@@ -100,7 +133,6 @@ public class Catalog {
             String keys = (e.getKeyCode() == NativeKeyEvent.VC_UP) ? "up" : "down";
             LayerManager.BookInput = Controls.SelectMenu(keys, 6, LayerManager.BookInput);
             UpdateBook();
-            
         }
         
         else if (((e.getKeyCode() == NativeKeyEvent.VC_LEFT || e.getKeyCode() == NativeKeyEvent.VC_RIGHT)) && LayerManager.CatalogLayer == 0) {
@@ -165,7 +197,7 @@ public class Catalog {
     }
 
     public void CatalogNativeKeyTyped(NativeKeyEvent e) {
-		if ((Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') && LayerManager.CatalogLayer == 1 && !Controls.isCtrlPressed) { 
+		if ((Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') && (LayerManager.CatalogLayer == 1 || LayerManager.CatalogLayer == 4) && !Controls.isCtrlPressed) { 
             char keyChar = e.getKeyChar();
             if (NativeKeyEvent.getModifiersText(e.getModifiers()).contains("Shift")) {
                 keyChar = Character.toUpperCase(keyChar);
@@ -187,7 +219,11 @@ public class Catalog {
                 quantity += keyChar;
             }
             Controls.clearScreen();
-            AddBook();
+            if (LayerManager.CatalogLayer == 1) {
+                AddBook();
+            } else if (LayerManager.CatalogLayer == 4) {
+                UpdateBook();
+            }
         }
 
         if ((Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '-' || e.getKeyChar() == ' ') && LayerManager.CatalogLayer == 3 && !Controls.isCtrlPressed) { 
@@ -339,6 +375,18 @@ public class Catalog {
         quantity = String.valueOf(booksList.get(LayerManager.BookIndex).getQuantity());
     } 
     
+    public Books CreateUpdatedBook() {
+        String dateString = date; // Assuming 'date' is a String
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // Adjust the pattern as needed
+        Date date = null;
+        try {
+            date = (Date) formatter.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Books updatedBook = new Books(booksList.get(LayerManager.BookIndex).getId(), title, author, genre, location, date, Integer.parseInt(quantity));
+        return updatedBook;
+    }
 
     
 }

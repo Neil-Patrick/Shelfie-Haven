@@ -185,7 +185,49 @@ public class Queries {
         return booksList;
     }
     
-
+    public static boolean UpdateBook(Books updatedBook) {
+        Connection connection = null;
+        boolean isUpdated = false;
+    
+        System.out.println("Updating book with ID " + updatedBook.getId() + "...");
+        try {
+            // Add a 2-second delay
+            Thread.sleep(1000);
+        } catch (InterruptedException g) {
+            g.printStackTrace();
+        }
+        
+        try {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+    
+            // Prepare the SQL update query
+            String query = "UPDATE tbl_books SET title = ?, author = ?, genre = ?, location = ?, date = ?, quantity = ? WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+    
+            // Set the parameters for the query
+            preparedStatement.setString(1, updatedBook.getTitle());
+            preparedStatement.setString(2, updatedBook.getAuthor());
+            preparedStatement.setString(3, updatedBook.getGenre());
+            preparedStatement.setString(4, updatedBook.getlocation());
+            preparedStatement.setDate(5, new java.sql.Date(updatedBook.getDate().getTime()));
+            preparedStatement.setInt(6, updatedBook.getQuantity());
+            preparedStatement.setInt(7, updatedBook.getId());
+    
+            // Execute the update
+            int rowsAffected = preparedStatement.executeUpdate();
+            isUpdated = rowsAffected > 0;
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connectio
+            
+            DatabaseConnector.closeConnection();
+        }
+        
+        return isUpdated;
+    }
     
 
 }
