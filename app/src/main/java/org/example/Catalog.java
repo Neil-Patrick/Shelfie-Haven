@@ -29,8 +29,9 @@ public class Catalog {
             LayerManager.HomeOptions = 0;
             Home.PrintHomeUI();
             
-        } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && (LayerManager.CatalogLayer == 1 || LayerManager.CatalogLayer == 3)) {
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE && (LayerManager.CatalogLayer == 1 || LayerManager.CatalogLayer == 3 || LayerManager.CatalogLayer == 4)) {
             LayerManager.CatalogLayer = 0;
+            LayerManager.BookInput = 0;
             ListBooks();
         } else if (e.getKeyCode() == NativeKeyEvent.VC_BACKSPACE && LayerManager.CatalogLayer == 1) {
             try {
@@ -85,7 +86,24 @@ public class Catalog {
             LayerManager.CatalogLayer = 1;
             AddBook();
             
-        } else if (((e.getKeyCode() == NativeKeyEvent.VC_LEFT || e.getKeyCode() == NativeKeyEvent.VC_RIGHT)) && LayerManager.CatalogLayer == 0) {
+
+        } 
+        // Enter Update
+        else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 0) {
+            Controls.clearScreen();
+            LayerManager.CatalogLayer = 4;
+            UpdateBookFields(booksList.get(LayerManager.BookIndex));
+            UpdateBook();
+            
+        } else if (((e.getKeyCode() == NativeKeyEvent.VC_UP || e.getKeyCode() == NativeKeyEvent.VC_DOWN) && LayerManager.CatalogLayer == 4)) {
+            Controls.clearScreen();
+            String keys = (e.getKeyCode() == NativeKeyEvent.VC_UP) ? "up" : "down";
+            LayerManager.BookInput = Controls.SelectMenu(keys, 6, LayerManager.BookInput);
+            UpdateBook();
+            
+        }
+        
+        else if (((e.getKeyCode() == NativeKeyEvent.VC_LEFT || e.getKeyCode() == NativeKeyEvent.VC_RIGHT)) && LayerManager.CatalogLayer == 0) {
             String keys = (e.getKeyCode() == NativeKeyEvent.VC_LEFT) ? "up" : "down";
             LayerManager.BookIndex = Controls.SelectMenu(keys, booksList.size(), LayerManager.BookIndex);
             ListBooks();
@@ -111,7 +129,7 @@ public class Catalog {
             ListBooks();
         }
 
-        else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_F && LayerManager.CatalogLayer == 0) {
+        else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_B && LayerManager.CatalogLayer == 0) {
             Controls.clearScreen();
             LayerManager.CatalogLayer = 3;
             ShowSearchUI();
@@ -298,6 +316,28 @@ public class Catalog {
         Controls.clearScreen();
         Controls.PrintOptionInCenter("Search:  " + search, 150, true, 40);
     }
+
+    public void UpdateBook() {
+        Controls.clearScreen();
+        
+        AsciiUIDesign.UpdateBookUi();
+        Controls.PrintOptionInCenter("Title:                " + title, 150, LayerManager.BookInput == 0, 40);
+        Controls.PrintOptionInCenter("Author:               " + author, 150, LayerManager.BookInput == 1, 40);
+        Controls.PrintOptionInCenter("Genre:                " + genre, 150, LayerManager.BookInput == 2, 40);
+        Controls.PrintOptionInCenter("Location:             " + location, 150, LayerManager.BookInput == 3, 40);
+        Controls.PrintOptionInCenter("Date(YYYY-MM-DD):     " + date, 150, LayerManager.BookInput == 4, 40);
+        Controls.PrintOptionInCenter("Quantity:             " + quantity, 150, LayerManager.BookInput == 5, 40);
+
+    }
+
+    public void UpdateBookFields(Books book) {
+        title = booksList.get(LayerManager.BookIndex).getTitle();
+        author =  booksList.get(LayerManager.BookIndex).getAuthor();
+        genre = booksList.get(LayerManager.BookIndex).getGenre();
+        location = booksList.get(LayerManager.BookIndex).getlocation();
+        date = booksList.get(LayerManager.BookIndex).getDate().toString();
+        quantity = String.valueOf(booksList.get(LayerManager.BookIndex).getQuantity());
+    } 
     
 
     

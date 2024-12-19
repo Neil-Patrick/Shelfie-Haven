@@ -63,6 +63,14 @@ public class AsciiUIDesign {
         Controls.PrintInCenter("");
         Controls.PrintInCenter("");
     }
+
+    public static void UpdateBookUi() {
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                                      Update Book                                ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+    }
     public static void MenuGuideUI(){
         Controls.PrintInCenter("╔═══════════════════════╗");
         Controls.PrintInCenter("║  [Up & Down]  Select  ║");
