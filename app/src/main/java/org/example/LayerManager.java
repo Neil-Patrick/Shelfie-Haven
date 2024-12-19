@@ -14,5 +14,6 @@ public class LayerManager {
     public static int BookInput = 0; //Title 0, Author 1, Genre 2, Location 3, Date 4, Quantity 5
  
     public static int BorrowLayer = 0; //ShowBooks 0, Search 1, Enter Name 2, Confirm 3
+    public static int searchLayer = 0;  
 
 }
