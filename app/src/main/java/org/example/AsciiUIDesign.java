@@ -64,25 +64,21 @@ public class AsciiUIDesign {
         Controls.PrintInCenter("");
     }
     public static void MenuGuideUI(){
-        Controls.PrintInCenter("╔══════════════════════════════════════════════╗");
-        Controls.PrintInCenter("║                NAVIGATION GUIDE              ║");
-        Controls.PrintInCenter("║                                              ║");
-        Controls.PrintInCenter("║    Select: Up Arrow Key and Down Arrow Key   ║");
-        Controls.PrintInCenter("║               Confirm: Enter Key             ║");
-        Controls.PrintInCenter("╚══════════════════════════════════════════════╝");
+        Controls.PrintInCenter("╔═══════════════════════╗");
+        Controls.PrintInCenter("║  [Up & Down]  Select  ║");
+        Controls.PrintInCenter("║  [Enter]      Confirm ║");
+        Controls.PrintInCenter("╚═══════════════════════╝");
        
     }
     public static void BookCatalogGuideUI(){
-        Controls.PrintInCenter("╔════════════════════════════════════════════════════════════╗");
-        Controls.PrintInCenter("║                      NAVIGATION GUIDE                      ║");
-        Controls.PrintInCenter("║                                                            ║");
-        Controls.PrintInCenter("║         Browse: Left Arrow Key and Right Arrow Key         ║");
-        Controls.PrintInCenter("║         Add Book: CTRL Key + Shift + (+) plus sign         ║");
-        Controls.PrintInCenter("║    Add Book Navigation: Up Arrow Key and Down Arrow Key    ║");
-        Controls.PrintInCenter("║         Remove a Character: Backspace/DELETE Key           ║");
-        Controls.PrintInCenter("║                Confirm Add Book: Enter Key                 ║");
-        Controls.PrintInCenter("║                   Back: Escape Key (Esc)                   ║");
-        Controls.PrintInCenter("╚════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter("╔════════════════════════════════════╗");
+        Controls.PrintInCenter("║ [Left & Right]        Browse       ║");
+        Controls.PrintInCenter("║ [CTRL + Shift + (+)]  Add Book     ║");
+        Controls.PrintInCenter("║ [Up & Down]           Add Book Nav ║");
+        Controls.PrintInCenter("║ [Backspace/Del]       Remove       ║");
+        Controls.PrintInCenter("║ [Enter]               Confirm      ║");
+        Controls.PrintInCenter("║ [Esc]                 Back         ║");
+        Controls.PrintInCenter("╚════════════════════════════════════╝");
         
     }
     
