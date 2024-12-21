@@ -1,7 +1,8 @@
 package org.example;
 import java.util.Date;
 
-public class Borrower {
+public class Borrower 
+{
     private int id;
     private String fName;
     private String mName;
@@ -10,7 +11,8 @@ public class Borrower {
     private Date dateBorrowed;
     private String title;
 
-    public Borrower(int id, String fName, String mName, String lName, int bookId, Date dateBorrowed, String title) {
+    public Borrower(int id, String fName, String mName, String lName, int bookId, Date dateBorrowed, String title) 
+    {
         this.id = id;
         this.fName = fName;
         this.mName = mName;
@@ -20,35 +22,43 @@ public class Borrower {
         this.title = title;
     }
 
-    public int getId() {
+    public int getId() 
+    {
         return id;
     }
 
-    public String getFName() {
+    public String getFName() 
+    {
         return fName;
     }
 
-    public String getMName() {
+    public String getMName() 
+    {
         return mName;
     }
 
-    public String getLName() {
+    public String getLName() 
+    {
         return lName;
     }
 
-    public int getBookId() {
+    public int getBookId() 
+    {
         return bookId;
     }
 
-    public Date getDateBorrowed() {
+    public Date getDateBorrowed() 
+    {
         return dateBorrowed;
     }
 
-    public String getTitle() {
+    public String getTitle() 
+    {
         return title;
     }
 
-    public String getName() {
+    public String getName() 
+    {
         return fName + " " + mName + " " + lName;
     }
 

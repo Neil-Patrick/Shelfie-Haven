@@ -8,46 +8,34 @@ import java.util.List;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
-public class BorrowedList {
+public class BorrowedList 
+{
     public static List<Borrower> borrowers = Queries.GetBorrowers();
 
 
-    public void BorrowedBookListNativeKeyPressed(NativeKeyEvent e) {
-        switch (e.getKeyCode()) {
-            case NativeKeyEvent.VC_UP:
-                Select(e);
-                break;
-            case NativeKeyEvent.VC_DOWN:
-                Select(e);
-                break;
-            case NativeKeyEvent.VC_LEFT:
-                SelectPage(e);
-                break;
-            case NativeKeyEvent.VC_RIGHT:
-                SelectPage(e);
-                break;
+    public void BorrowedBookListNativeKeyPressed(NativeKeyEvent e) 
+    {
+        switch (e.getKeyCode()) 
+        {
+            case NativeKeyEvent.VC_UP: Select(e); break;    
+            case NativeKeyEvent.VC_DOWN: Select(e); break;  
+            case NativeKeyEvent.VC_LEFT: SelectPage(e); break;    
+            case NativeKeyEvent.VC_RIGHT: SelectPage(e); break;   
             case NativeKeyEvent.VC_ENTER:
-                switch (LayerManager.BorrowedListLayer) {
-                    case 0:
-                        ReturnBookConfirmation();
-                        break;
-                    case 1:
-                        ReturnBook();
-                        break;
-                    default:
-                        break;
+                switch (LayerManager.BorrowedListLayer) 
+                {
+                    case 0: ReturnBookConfirmation(); break;    
+                    case 1: ReturnBook(); break;  
+                    default: break;
+                        
                 }
                 break;
             case NativeKeyEvent.VC_ESCAPE:
-                switch (LayerManager.BorrowedListLayer) {
-                    case 0:
-                        GotoHome();
-                        break;
-                    case 1:
-                        BorrowedBookListUi();
-                        break;
-                    default:
-                        break;
+                switch (LayerManager.BorrowedListLayer) 
+                {
+                    case 0: GotoHome(); break;    
+                    case 1: BorrowedBookListUi(); break;
+                    default: break;   
                 }
                 break;
             default:
@@ -55,8 +43,8 @@ public class BorrowedList {
         }
     }
 
-
-    private void Select(NativeKeyEvent e) {
+    private void Select(NativeKeyEvent e) 
+    {
         Controls.clearScreen();
         String keys = (e.getKeyCode() == NativeKeyEvent.VC_UP) ? "up" : "down";
 
@@ -65,7 +53,9 @@ public class BorrowedList {
         LayerManager.currentSelection = Controls.SelectMenu(keys, numberOfOptions, LayerManager.currentSelection);
         BorrowedBookListUi();
     }
-    private void SelectPage(NativeKeyEvent e) {
+
+    private void SelectPage(NativeKeyEvent e) 
+    {
         Controls.clearScreen();
         String keys = (e.getKeyCode() == NativeKeyEvent.VC_LEFT) ? "up" : "down";
         int totalPages = (borrowers.size() > 0) ? (int) Math.ceil((double) borrowers.size() / 10.0) : 1;
@@ -74,26 +64,55 @@ public class BorrowedList {
         BorrowedBookListUi();
     }
 
-    public static void BorrowedBookListUi() {
+    public static void BorrowedBookListUi() 
+    {
         LayerManager.BorrowedListLayer = 0;
         Controls.clearScreen();
         AsciiUIDesign.BorrowBookUi();
         displayPage();
-
-    }
-
-    public void ReturnBookConfirmation() {
-        LayerManager.BorrowedListLayer = 1;
-        Borrower borrower = borrowers.get(LayerManager.currentPage * 10 + LayerManager.currentSelection);
-        Controls.clearScreen();
-        Controls.PrintInCenter("Are you sure you want to return this book?");
         Controls.PrintInCenter("");
-        Controls.PrintOptionInCenter("Title: " + borrower.getTitle(), 150, false, 40);
-        Controls.PrintOptionInCenter("Borrower: " + borrower.getName(), 150, false, 40);
-        Controls.PrintOptionInCenter("Date Borrowed: " + borrower.getDateBorrowed().toString(), 150, false, 40);
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        AsciiUIDesign.BorrowedBookGuideUI();
+
     }
 
-    public void GotoHome() {
+    public void ReturnBookConfirmation() 
+    {
+        
+        if (!borrowers.isEmpty())
+            {
+                LayerManager.BorrowedListLayer = 1;
+                Borrower borrower = borrowers.get(LayerManager.currentPage * 10 + LayerManager.currentSelection);
+                Controls.clearScreen();
+                Controls.PrintInCenter("Are you sure you want to return this book?");
+                Controls.PrintInCenter("");
+                Controls.PrintOptionInCenter("Title: " + borrower.getTitle(), 150, false, 40);
+                Controls.PrintOptionInCenter("Borrower: " + borrower.getName(), 150, false, 40);
+                Controls.PrintOptionInCenter("Date Borrowed: " + borrower.getDateBorrowed().toString(), 150, false, 40);
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                AsciiUIDesign.ConfirmReturnGuideUI();
+            }
+            else
+            {
+                Controls.clearScreen();
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                AsciiUIDesign.NoBookUI();
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                AsciiUIDesign.ConfirmReturnGuideUI();
+            }
+    }
+
+    public void GotoHome() 
+    {
         Controls.clearScreen();
         LayerManager.BorrowedListLayer = 0;
         LayerManager.currentPage = 0;
@@ -102,7 +121,8 @@ public class BorrowedList {
         Home.PrintHomeUI();
     }
 
-    public void ReturnBook() {
+    public void ReturnBook() 
+    {
         Borrower borrower = borrowers.get(LayerManager.currentPage * 10 + LayerManager.currentSelection);
         LayerManager.BorrowedListLayer = 0;
         LayerManager.currentSelection = 0;
@@ -112,7 +132,8 @@ public class BorrowedList {
         BorrowedBookListUi();
     }
 
-    private static void displayPage() {
+    private static void displayPage() 
+    {
         int pageSize = 10;
         int totalPages = (borrowers.size() > 0) ? (int) Math.ceil((double) borrowers.size() / 10.0) : 1;
 
@@ -124,7 +145,9 @@ public class BorrowedList {
         Controls.PrintInCenter("---------------------------------------------------------------------------");
         Controls.PrintInCenter("ID  Name                 Title                Date Borrowed");
         Controls.PrintInCenter("---------------------------------------------------------------------------");
-        for (int i = start; i < end; i++) {
+
+        for (int i = start; i < end; i++) 
+        {
             String id = String.format("%-3s", borrowers.get(i).getId()); // Ensure ID is 3 characters wide, left-aligned
             String name = borrowers.get(i).getName();
             String title = borrowers.get(i).getTitle();
@@ -136,11 +159,14 @@ public class BorrowedList {
             if (date.length() > 20) date = date.substring(0, 17) + "...";
 
             // Print the output with the specified width formatting
-            if (i - start == LayerManager.currentSelection) {
+            if (i - start == LayerManager.currentSelection) 
+            {
                 Controls.PrintOptionInCenter(String.format("-> %-3s %-20s %-20s %-20s", id, name, title, date), 150, true, 42);
-            } else {
+            } 
+            else 
+            {
                 Controls.PrintOptionInCenter(String.format("   %-3s %-20s %-20s %-20s", id, name, title, date), 150, false, 42);
-    }
+            }
         }
 
         

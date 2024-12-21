@@ -10,48 +10,58 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Queries {
-    public static List<Books> GetBooks() {
+public class Queries 
+{
+    public static List<Books> GetBooks() 
+    {
         List<Books> booksList = new ArrayList<Books>();
         Connection connection = null;
 
-    try {
-        // Get the database connection
-        connection = DatabaseConnector.getConnection();
+        try 
+        {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
 
-        // Execute a sample query
-        String query = "SELECT * FROM tbl_books"; // Replace 'tbl_books' with your table name
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query);
+            // Execute a sample query
+            String query = "SELECT * FROM tbl_books"; // Replace 'tbl_books' with your table name
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
 
-        // Populate the list with Books objects
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String title = resultSet.getString("title");
-            String author = resultSet.getString("author");
-            String genre = resultSet.getString("genre");
-            String location = resultSet.getString("location");
-            Date date = resultSet.getDate("date");
-            int quantity = resultSet.getInt("quantity");
+            // Populate the list with Books objects
+            while (resultSet.next()) 
+            {
+                int id = resultSet.getInt("id");
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
+                String genre = resultSet.getString("genre");
+                String location = resultSet.getString("location");
+                Date date = resultSet.getDate("date");
+                int quantity = resultSet.getInt("quantity");
 
-            // Create a Books object and add it to the list
-            Books book = new Books(id, title, author, genre, location, date, quantity);
-            booksList.add(book);
+                // Create a Books object and add it to the list
+                Books book = new Books(id, title, author, genre, location, date, quantity);
+                booksList.add(book);
+            }
+
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+        } 
+        finally 
+        {
+            // Close the connection
+            DatabaseConnector.closeConnection();
         }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        // Close the connection
-        DatabaseConnector.closeConnection();
-    }
         return booksList;
     }
 
-    public static void AddBook(String title, String author, String genre, String location, String date, String quantity) {
+    public static void AddBook(String title, String author, String genre, String location, String date, String quantity) 
+    {
         Connection connection = null;
 
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
 
@@ -65,36 +75,47 @@ public class Queries {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             // Set parameters
-        preparedStatement.setString(1, title);
-        preparedStatement.setString(2, author);
-        preparedStatement.setString(3, genre);
-        preparedStatement.setString(4, location);
-        preparedStatement.setDate(5, sqlDate);
-        preparedStatement.setInt(6, bookQuantity);
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, author);
+            preparedStatement.setString(3, genre);
+            preparedStatement.setString(4, location);
+            preparedStatement.setDate(5, sqlDate);
+            preparedStatement.setInt(6, bookQuantity);
 
             // Execute update
             preparedStatement.executeUpdate();
 
-        } catch (IllegalArgumentException e) {
+        } 
+        catch (IllegalArgumentException e) 
+        {
             System.out.println("Adding Failed: Please enter a valid input.");
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-        } finally {
+        } 
+        finally 
+        {
             // Close the connection
-            try {
+            try 
+            {
                 // Add a 2-second delay
                 Thread.sleep(2000);
-            } catch (InterruptedException e) {
+            } 
+            catch (InterruptedException e) 
+            {
                 e.printStackTrace();
             }
             DatabaseConnector.closeConnection();
         }
     }
 
-    public static void DeleteBook(int id) {
+    public static void DeleteBook(int id) 
+    {
         Connection connection = null;
     
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
     
@@ -109,36 +130,52 @@ public class Queries {
             int rowsAffected = preparedStatement.executeUpdate();
     
             // Provide feedback
-            if (rowsAffected > 0) {
+            if (rowsAffected > 0) 
+            {
                 System.out.println("Book with ID " + id + " deleted successfully.");
-            } else {
+            } 
+            else 
+            {
                 System.out.println("No book found with ID " + id + ".");
             }
-            try {
+
+            try 
+            {
                 // Add a 2-second delay
                 Thread.sleep(1000);
-            } catch (InterruptedException g) {
+            } 
+            catch (InterruptedException g) 
+            {
                 g.printStackTrace();
             }
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-        } finally {
+        } 
+        finally 
+        {
             // Close the connection
-            try {
+            try 
+            {
                 // Add a 2-second delay
                 Thread.sleep(2000);
-            } catch (InterruptedException e) {
+            } 
+            catch (InterruptedException e) 
+            {
                 e.printStackTrace();
             }
             DatabaseConnector.closeConnection();
         }
     }
     
-    public static List<Books> GetSearchedBooks(String searchKeyword) {
+    public static List<Books> GetSearchedBooks(String searchKeyword) 
+    {
         List<Books> booksList = new ArrayList<>();
         Connection connection = null;
     
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
     
@@ -154,7 +191,8 @@ public class Queries {
     
             // Add wildcards to the search keyword for partial matching
             String searchPattern = "%" + searchKeyword + "%";
-            for (int i = 1; i <= 6; i++) {
+            for (int i = 1; i <= 6; i++) 
+            {
                 preparedStatement.setString(i, searchPattern);
             }
     
@@ -162,7 +200,8 @@ public class Queries {
             ResultSet resultSet = preparedStatement.executeQuery();
     
             // Populate the list with Books objects
-            while (resultSet.next()) {
+            while (resultSet.next()) 
+            {
                 int id = resultSet.getInt("id");
                 String title = resultSet.getString("title");
                 String author = resultSet.getString("author");
@@ -176,28 +215,37 @@ public class Queries {
                 booksList.add(book);
             }
     
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-        } finally {
+        } 
+        finally 
+        {
             // Close the connection
             DatabaseConnector.closeConnection();
         }
         return booksList;
     }
     
-    public static boolean UpdateBook(Books updatedBook) {
+    public static boolean UpdateBook(Books updatedBook) 
+    {
         Connection connection = null;
         boolean isUpdated = false;
     
         System.out.println("Updating book with ID " + updatedBook.getId() + "...");
-        try {
+        try 
+        {
             // Add a 2-second delay
             Thread.sleep(1000);
-        } catch (InterruptedException g) {
+        } 
+        catch (InterruptedException g) 
+        {
             g.printStackTrace();
         }
         
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
     
@@ -218,9 +266,13 @@ public class Queries {
             int rowsAffected = preparedStatement.executeUpdate();
             isUpdated = rowsAffected > 0;
     
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-        } finally {
+        } 
+        finally 
+        {
             // Close the connectio
             
             DatabaseConnector.closeConnection();
@@ -230,11 +282,13 @@ public class Queries {
     }
     
 
-    public static boolean AddBorrower(String firstName, String middleName, String lastName, int bookId, Date dateBorrowed, String title) {
+    public static boolean AddBorrower(String firstName, String middleName, String lastName, int bookId, Date dateBorrowed, String title) 
+    {
         Connection connection = null;
         boolean isAdded = false;
     
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
     
@@ -247,7 +301,8 @@ public class Queries {
             checkStatement.setInt(1, bookId);
             ResultSet resultSet = checkStatement.executeQuery();
     
-            if (resultSet.next()) {
+            if (resultSet.next()) 
+            {
                 int quantity = resultSet.getInt("quantity");
     
                 // Insert borrower details into tbl_borrower
@@ -264,7 +319,8 @@ public class Queries {
                 int rowsInserted = insertStatement.executeUpdate();
     
                 // Update the quantity in tbl_books
-                if (rowsInserted > 0) {
+                if (rowsInserted > 0) 
+                {
                     String updateQuery = "UPDATE tbl_books SET quantity = ? - 1 WHERE id = ?";
                     PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
                     updateStatement.setInt(1, quantity);
@@ -272,7 +328,8 @@ public class Queries {
     
                     int rowsUpdated = updateStatement.executeUpdate();
     
-                    if (rowsUpdated > 0) {
+                    if (rowsUpdated > 0) 
+                    {
                         isAdded = true;
                     }
                 }
@@ -281,16 +338,24 @@ public class Queries {
                 connection.commit();
             } 
     
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-            try {
-                if (connection != null) {
+            try 
+            {
+                if (connection != null) 
+                {
                     connection.rollback();
                 }
-            } catch (SQLException rollbackEx) {
+            } 
+            catch (SQLException rollbackEx) 
+            {
                 rollbackEx.printStackTrace();
             }
-        } finally {
+        } 
+        finally 
+        {
             // Close the connection
             DatabaseConnector.closeConnection();
         }
@@ -298,11 +363,13 @@ public class Queries {
         return isAdded;
     }
     
-    public static List<Borrower> GetBorrowers() {
+    public static List<Borrower> GetBorrowers() 
+    {
         List<Borrower> borrowers = new ArrayList<>();
         Connection connection = null;
 
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
 
@@ -312,7 +379,8 @@ public class Queries {
             ResultSet resultSet = statement.executeQuery();
 
             // Loop through the result set and populate the Borrower list
-            while (resultSet.next()) {
+            while (resultSet.next()) 
+            {
                 int id = resultSet.getInt("id");
                 String firstName = resultSet.getString("first_name");
                 String middleName = resultSet.getString("middle_name");
@@ -327,9 +395,13 @@ public class Queries {
 
             resultSet.close();
             statement.close();
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-        } finally {
+        } 
+        finally 
+        {
             // Close the connection
             DatabaseConnector.closeConnection();
         }
@@ -337,13 +409,15 @@ public class Queries {
         return borrowers;
     }
 
-    public static boolean ReturnBook(Borrower borrower) {
+    public static boolean ReturnBook(Borrower borrower) 
+    {
         Connection connection = null;
         boolean isReturned = false;
     
         int bookId = borrower.getBookId();
         int borrowerId = borrower.getId(); // Assuming there's a method to get the borrower's ID
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
     
@@ -356,7 +430,8 @@ public class Queries {
             checkStatement.setInt(1, bookId);
             ResultSet resultSet = checkStatement.executeQuery();
     
-            if (resultSet.next()) {
+            if (resultSet.next()) 
+            {
                 int quantity = resultSet.getInt("quantity");
     
                 // Delete the borrower from the tbl_borrower table
@@ -366,7 +441,8 @@ public class Queries {
                 int rowsDeleted = deleteStatement.executeUpdate();
     
                 // Update the book quantity in tbl_books if the borrower is deleted
-                if (rowsDeleted > 0) {
+                if (rowsDeleted > 0) 
+                {
                     String updateQuery = "UPDATE tbl_books SET quantity = ? + 1 WHERE id = ?";
                     PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
                     updateStatement.setInt(1, quantity); // Increase the quantity by 1
@@ -374,7 +450,8 @@ public class Queries {
     
                     int rowsUpdated = updateStatement.executeUpdate();
     
-                    if (rowsUpdated > 0) {
+                    if (rowsUpdated > 0) 
+                    {
                         isReturned = true;
                     }
                 }
@@ -382,16 +459,24 @@ public class Queries {
     
             // Commit transaction
             connection.commit();
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-            try {
-                if (connection != null) {
+            try 
+            {
+                if (connection != null) 
+                {
                     connection.rollback();
                 }
-            } catch (SQLException rollbackEx) {
+            } 
+            catch (SQLException rollbackEx) 
+            {
                 rollbackEx.printStackTrace();
             }
-        } finally {
+        } 
+        finally 
+        {
             // Close the connection
             DatabaseConnector.closeConnection();
         }
@@ -400,11 +485,13 @@ public class Queries {
     }
     
 
-    public static int CountBooks() {
+    public static int CountBooks() 
+    {
         Connection connection = null;
         int count = 0;
     
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
     
@@ -414,24 +501,30 @@ public class Queries {
             ResultSet resultSet = statement.executeQuery(query);
     
             // Get the count from the result set
-            if (resultSet.next()) {
+            if (resultSet.next()) 
+            {
                 count = resultSet.getInt(1); // The count is the first column in the result
             }
     
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-        } finally {
+        } 
+        finally 
+        {
             // Close the connection
             DatabaseConnector.closeConnection();
         }
-    
         return count;
     }
-    public static int CountBorrowedBooks() {
+    public static int CountBorrowedBooks() 
+    {
         Connection connection = null;
         int count = 0;
     
-        try {
+        try 
+        {
             // Get the database connection
             connection = DatabaseConnector.getConnection();
     
@@ -441,13 +534,18 @@ public class Queries {
             ResultSet resultSet = statement.executeQuery(query);
     
             // Get the count from the result set
-            if (resultSet.next()) {
+            if (resultSet.next()) 
+            {
                 count = resultSet.getInt(1); // The count is the first column in the result
             }
     
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-        } finally {
+        } 
+        finally 
+        {
             // Close the connection
             DatabaseConnector.closeConnection();
         }

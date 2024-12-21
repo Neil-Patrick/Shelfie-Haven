@@ -2,7 +2,8 @@ package org.example;
 
 import java.util.Date;
 
-public class Books {
+public class Books 
+{
     private int id;
     private String title;
     private String author;
@@ -11,7 +12,8 @@ public class Books {
     private Date date;
     private int quantity;
 
-    public Books(int id, String title, String author, String genre, String location, Date date, int quantity) {
+    public Books(int id, String title, String author, String genre, String location, Date date, int quantity) 
+    {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -21,31 +23,38 @@ public class Books {
         this.quantity = quantity;
     }
 
-    public int getId() {
+    public int getId() 
+    {
         return id;
     }
 
-    public String getTitle() {
+    public String getTitle() 
+    {
         return title;
     }
 
-    public String getAuthor() {
+    public String getAuthor() 
+    {
         return author;
     }
 
-    public String getGenre() {
+    public String getGenre() 
+    {
         return genre;
     }
 
-    public String getlocation() {
+    public String getlocation() 
+    {
         return location;
     }
 
-    public Date getDate() {
+    public Date getDate() 
+    {
         return date;
     }
 
-    public int getQuantity() {
+    public int getQuantity() 
+    {
         return quantity;
     }
     
