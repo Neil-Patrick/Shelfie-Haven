@@ -88,7 +88,7 @@ public class Borrow implements NativeKeyListener
                     default: break;
                 }
                 break;
-            case NativeKeyEvent.VC_F:
+            case NativeKeyEvent.VC_B:
                 switch (LayerManager.BorrowLayer) 
                 {
                     case 0:
