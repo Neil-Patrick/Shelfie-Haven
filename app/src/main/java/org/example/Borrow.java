@@ -351,7 +351,6 @@ public class Borrow implements NativeKeyListener
     public static void ListBooks() 
     {
         Controls.clearScreen();
-        //AsciiUIDesign.BorrowBookUi();
         AsciiUIDesign.AvailableBooksUI();
         if (booksList.isEmpty()) 
         {

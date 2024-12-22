@@ -124,12 +124,6 @@ public class AsciiUIDesign
         Controls.PrintInCenter("║                                    Search Book                                  ║");
         Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
     }
-    // public static void LoginGuideUI()
-    // {
-    //     Controls.PrintInCenter("╔══════════════════════════════╗");
-    //     Controls.PrintInCenter("║  [Enter]      Confirm Input  ║");
-    //     Controls.PrintInCenter("╚══════════════════════════════╝");
-    // }
     public static void LoginGuideUI()
     {
         System.out.println("╔══════════════════════════════╗");
