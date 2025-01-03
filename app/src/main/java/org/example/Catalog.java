@@ -206,9 +206,15 @@ public class Catalog {
         {
             Controls.clearScreen();
             LayerManager.CatalogLayer = 2;
-            System.out.println("Are you sure you want to delete this book? ");
-            System.out.println("Press Enter to continue");
-            System.out.println("Press Esc to cancel");
+            // System.out.println("Are you sure you want to delete this book? ");
+            // System.out.println("Press Enter to continue");
+            // System.out.println("Press Esc to cancel");
+            AsciiUIDesign.DeleteUI();
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            Controls.PrintInCenter("");
+            AsciiUIDesign.DeleteGuideUI();
+        
         } 
         else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 2) 
         {

@@ -223,8 +223,21 @@ public class AsciiUIDesign
         Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
         
     }
-    
-    
+    public static void DeleteGuideUI()
+    {
+        Controls.PrintInCenter("╔════════════════════╗");
+        Controls.PrintInCenter("║  [Enter]   Confirm ║");
+        Controls.PrintInCenter("║  [Esc]     Back    ║");
+        Controls.PrintInCenter("╚════════════════════╝");
+    }
+    public static void DeleteUI() 
+    {
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                    Are you sure you want to delete this book?.                  ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
 
-
+    }
 }
