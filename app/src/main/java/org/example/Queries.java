@@ -282,7 +282,7 @@ public class Queries
     }
     
 
-    public static boolean AddBorrower(String firstName, String middleName, String lastName, int bookId, Date dateBorrowed, String title) 
+    public static boolean AddBorrower(String firstName, String middleName, String lastName, int bookId, Date dateBorrowed) 
     {
         Connection connection = null;
         boolean isAdded = false;
@@ -306,7 +306,7 @@ public class Queries
                 int quantity = resultSet.getInt("quantity");
     
                 // Insert borrower details into tbl_borrower
-                String insertQuery = "INSERT INTO tbl_borrower (first_name, middle_name, last_name, book_id, date_borrowed, title) VALUES (?, ?, ?, ?, ?, ?)";
+                String insertQuery = "INSERT INTO tbl_borrower (first_name, middle_name, last_name, book_id, date_borrowed) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
     
                 insertStatement.setString(1, firstName);
@@ -314,7 +314,6 @@ public class Queries
                 insertStatement.setString(3, lastName);
                 insertStatement.setInt(4, bookId);
                 insertStatement.setDate(5, new java.sql.Date(dateBorrowed.getTime()));
-                insertStatement.setString(6, title);
     
                 int rowsInserted = insertStatement.executeUpdate();
     
@@ -374,7 +373,7 @@ public class Queries
             connection = DatabaseConnector.getConnection();
 
             // Query to get all borrowers
-            String query = "SELECT id, first_name, middle_name, last_name, book_id, date_borrowed, title FROM tbl_borrower";
+            String query = "SELECT id, first_name, middle_name, last_name, book_id, date_borrowed FROM tbl_borrower";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -387,9 +386,8 @@ public class Queries
                 String lastName = resultSet.getString("last_name");
                 int bookId = resultSet.getInt("book_id");
                 Date dateBorrowed = resultSet.getDate("date_borrowed");
-                String title = resultSet.getString("title");
 
-                Borrower borrower = new Borrower(id, firstName, middleName, lastName, bookId, dateBorrowed, title);
+                Borrower borrower = new Borrower(id, firstName, middleName, lastName, bookId, dateBorrowed);
                 borrowers.add(borrower);
             }
 
@@ -405,7 +403,7 @@ public class Queries
             // Close the connection
             DatabaseConnector.closeConnection();
         }
-
+        borrowers = AddTitle(borrowers);
         return borrowers;
     }
 
@@ -553,6 +551,41 @@ public class Queries
         return count;
     }
     
+    private static List<Borrower> AddTitle(List<Borrower> borrowers) 
+    {
+        List<Borrower> newBorrowers = new ArrayList<>();
+        Connection connection = null;
     
+        try 
+        {
+            // Get the database connection
+            connection = DatabaseConnector.getConnection();
+    
+            // Query to get the title of the book borrowed by each borrower
+            String query = "SELECT title FROM tbl_books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+    
+            for (Borrower borrower : borrowers) 
+            {
+                statement.setInt(1, borrower.getBookId());
+                ResultSet resultSet = statement.executeQuery();
+    
+                if (resultSet.next()) 
+                {
+                    String title = resultSet.getString("title");
+
+                    Borrower borrower2 = new Borrower(borrower.getId(), borrower.getFName(), borrower.getMName(), borrower.getLName(), borrower.getBookId(), borrower.getDateBorrowed(), title);
+                    newBorrowers.add(borrower2);
+                }
+            }
+    
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+        }
+
+        return newBorrowers;
+    }
 
 }

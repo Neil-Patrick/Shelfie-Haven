@@ -22,6 +22,16 @@ public class Borrower
         this.title = title;
     }
 
+    public Borrower(int id, String fName, String mName, String lName, int bookId, Date dateBorrowed)
+    {
+        this.id = id;
+        this.fName = fName;
+        this.mName = mName;
+        this.lName = lName;
+        this.bookId = bookId;
+        this.dateBorrowed = dateBorrowed;
+    }
+
     public int getId() 
     {
         return id;
