@@ -240,4 +240,11 @@ public class AsciiUIDesign
         Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
 
     }
+    public static void UpdateBookGuideUI()
+    {
+        Controls.PrintInCenter("╔════════════════════╗");
+        Controls.PrintInCenter("║  [Enter]   Confirm ║");
+        Controls.PrintInCenter("║  [Esc]     Back    ║");
+        Controls.PrintInCenter("╚════════════════════╝");
+    }
 }

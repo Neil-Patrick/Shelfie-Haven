@@ -499,7 +499,10 @@ public class Catalog {
         Controls.PrintOptionInCenter("Location:             " + location, 150, LayerManager.BookInput == 3, 40);
         Controls.PrintOptionInCenter("Date(YYYY-MM-DD):     " + date, 150, LayerManager.BookInput == 4, 40);
         Controls.PrintOptionInCenter("Quantity:             " + quantity, 150, LayerManager.BookInput == 5, 40);
-
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        AsciiUIDesign.UpdateBookGuideUI();
     }
 
     public void UpdateBookFields(Books book) 
