@@ -247,4 +247,13 @@ public class AsciiUIDesign
         Controls.PrintInCenter("║  [Esc]     Back    ║");
         Controls.PrintInCenter("╚════════════════════╝");
     }
+    public static void StatusGuideUI()
+    {
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("");
+        Controls.PrintInCenter("╔════════════════════╗");
+        Controls.PrintInCenter("║  [Esc]     Back    ║");
+        Controls.PrintInCenter("╚════════════════════╝");
+    }
 }

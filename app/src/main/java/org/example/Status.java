@@ -20,6 +20,7 @@ public class Status
         AsciiUIDesign.BookStatusUi();
         Controls.PrintInCenter("Total Books:           " + Queries.CountBooks());
         Controls.PrintInCenter("Total Borrowed Books:  " + Queries.CountBorrowedBooks());
+        AsciiUIDesign.StatusGuideUI();
     }
     
     public void GotoHome() 
