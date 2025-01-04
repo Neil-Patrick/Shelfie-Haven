@@ -256,4 +256,16 @@ public class AsciiUIDesign
         Controls.PrintInCenter("║  [Esc]     Back    ║");
         Controls.PrintInCenter("╚════════════════════╝");
     }
+    public static void UpdateSuccessfullyUI()
+    {
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                            Book Updated Successfully.                           ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
+    }
+    public static void UpdateFailedUI()
+    {
+        Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter("║                                Book Update Failed                               ║");
+        Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
+    }
 }

@@ -137,11 +137,11 @@ public class Catalog {
             boolean success = Queries.UpdateBook(CreateUpdatedBook());
             if (success) 
             {
-                System.out.println("Book updated successfully.");
+                AsciiUIDesign.UpdateSuccessfullyUI();
             } 
             else 
             {
-                System.out.println("Book update failed.");
+                AsciiUIDesign.UpdateFailedUI();
                 
             }
             try 
