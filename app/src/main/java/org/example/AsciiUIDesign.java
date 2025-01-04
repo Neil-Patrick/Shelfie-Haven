@@ -268,4 +268,16 @@ public class AsciiUIDesign
         Controls.PrintInCenter("║                                Book Update Failed                               ║");
         Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
     }
+    public static void AdminAccessRequired() {
+        // ANSI escape code for red text
+        String red = "\033[31m";  // Red text color
+        String reset = "\033[0m"; // Reset text color to default
+    
+        // Print the message in red
+        Controls.PrintInCenter(red + "╔═════════════════════════════════════════════════════════════════════════════════╗");
+        Controls.PrintInCenter(red + "║                             Admin Access Required.                              ║");
+        Controls.PrintInCenter(red + "╚═════════════════════════════════════════════════════════════════════════════════╝");
+        Controls.PrintInCenter(reset);
+    }
+    
 }

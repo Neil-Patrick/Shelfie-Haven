@@ -132,28 +132,43 @@ public class Catalog {
         // Update book
         else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 4) 
         {
-            Controls.clearScreen();
-            LayerManager.CatalogLayer = 0;
-            boolean success = Queries.UpdateBook(CreateUpdatedBook());
-            if (success) 
-            {
-                AsciiUIDesign.UpdateSuccessfullyUI();
-            } 
-            else 
-            {
-                AsciiUIDesign.UpdateFailedUI();
-                
+            if (Controls.admin == 1) {
+                Controls.clearScreen();
+                LayerManager.CatalogLayer = 0;
+                boolean success = Queries.UpdateBook(CreateUpdatedBook());
+                if (success) 
+                {
+                    AsciiUIDesign.UpdateSuccessfullyUI();
+                } 
+                else 
+                {
+                    AsciiUIDesign.UpdateFailedUI();
+                    
+                }
+                try 
+                {
+                    // Add a 2-second delay
+                    Thread.sleep(1000);
+                } 
+                catch (InterruptedException g) 
+                {
+                    g.printStackTrace();
+                }
+                ListBooks();
+            } else {
+                Controls.clearScreen();
+                LayerManager.CatalogLayer = 0;
+
+                AsciiUIDesign.AdminAccessRequired();
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException f) {
+                    f.printStackTrace();
+                }
+                Controls.clearScreen();
+                ListBooks();
             }
-            try 
-            {
-                // Add a 2-second delay
-                Thread.sleep(1000);
-            } 
-            catch (InterruptedException g) 
-            {
-                g.printStackTrace();
-            }
-            ListBooks();
+            
 
         } 
         else if (Controls.isCtrlPressed && e.getKeyCode() == NativeKeyEvent.VC_N && LayerManager.CatalogLayer == 0) 
@@ -204,16 +219,27 @@ public class Catalog {
         } 
         else if (e.getKeyCode() == NativeKeyEvent.VC_DELETE && LayerManager.CatalogLayer == 0) 
         {
-            Controls.clearScreen();
-            LayerManager.CatalogLayer = 2;
-            // System.out.println("Are you sure you want to delete this book? ");
-            // System.out.println("Press Enter to continue");
-            // System.out.println("Press Esc to cancel");
-            AsciiUIDesign.DeleteUI();
-            Controls.PrintInCenter("");
-            Controls.PrintInCenter("");
-            Controls.PrintInCenter("");
-            AsciiUIDesign.DeleteGuideUI();
+            if (Controls.admin == 1) {
+                Controls.clearScreen();
+                LayerManager.CatalogLayer = 2;
+                
+                AsciiUIDesign.DeleteUI();
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                Controls.PrintInCenter("");
+                AsciiUIDesign.DeleteGuideUI();
+            } else {
+                Controls.clearScreen();
+                AsciiUIDesign.AdminAccessRequired();
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException f) {
+                    f.printStackTrace();
+                }
+                Controls.clearScreen();
+                ListBooks();
+            }
+            
         
         } 
         else if (e.getKeyCode() == NativeKeyEvent.VC_ENTER && LayerManager.CatalogLayer == 2) 

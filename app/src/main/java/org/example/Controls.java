@@ -3,6 +3,7 @@ import org.fusesource.jansi.AnsiConsole;
 
 public class Controls 
 {
+    public static int admin = 0;
     public enum EventState 
     {
         STATUS, HOME, CATALOG, BORROW, BORROWEDLIST
