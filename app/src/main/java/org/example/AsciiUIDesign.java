@@ -18,7 +18,7 @@ public class AsciiUIDesign
     public static void HomePageUi() 
     {
         Controls.PrintInCenter("╔═════════════════════════════════════════════════════════════════════════════════╗");
-        Controls.PrintInCenter("║                              Welcome to Library Menu Page                       ║");
+        Controls.PrintInCenter("║                               Welcome to Shelfie Haven                          ║");
         Controls.PrintInCenter("╚═════════════════════════════════════════════════════════════════════════════════╝");
         Controls.PrintInCenter("");
         Controls.PrintInCenter("");
@@ -32,7 +32,7 @@ public class AsciiUIDesign
     public static String BookCatalog() 
     {
         return "╔═══════════════════════════════╗\n" +
-               "║          Book Catalogs        ║\n" +
+               "║          Book Catalog         ║\n" +
                "╚═══════════════════════════════╝\n";
     }
     public static String SearchAndBorrow() 
