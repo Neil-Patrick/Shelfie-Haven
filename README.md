@@ -1,44 +1,48 @@
 Shelfie Haven
+
 **Overview**
 
-Math Quest is an engaging Windows Forms application designed to help users, particularly young students, improve fundamental arithmetic skills through interactive gameplay. Developed by Vincent P. Landicho, Neil Patrick M. Pajadan, and Gabrielle B. Moneva, the game presents math problems in a fun pirate-themed environment, making learning enjoyable and captivating.
+Shelfie Haven is a Java Console Application designed to help users efficiently manage book borrowing transactions. The system is tailored for libraries and book enthusiasts, streamlining the process of borrowing, returning, and tracking books with ease.
 
 **Features**
 
-* Vintage graphics and animations
+* Easy management of book borrowing and returning transactions.
 
-* Customizable difficulty levels (Easy, Normal, Hard)
+* Detailed borrower and book information tracking.
 
-* Four arithmetic operations (Addition, Subtraction, Multiplication, Division)
+* Search for books and accompanying details.
 
-* Unique arithmetical logic system developed by the team
+* Transaction history logs for monitoring borrowing patterns.
 
-* Leaderboard feature to track scores
+* User-friendly console interface.
 
-* Sound control (Mute/Unmute)
+* Responsive system with quick updates on book availability.
 
-* Timer functionality to add urgency to gameplay
-
-* User-friendly interface with intuitive navigation
+* Multi-user access for admin or basic use.
 
 **Usage**
 
-1. Choose your difficulty level (Easy, Normal, Hard) and arithmetic operator (Addition, Subtraction, Multiplication, Division).
-2. Navigate your pirate ship using the arrow keys to collect treasure chests containing correct answers to math problems.
-3. Solve math problems within the time limit to earn points and avoid losing health.
-4. Compete with friends and family to achieve the highest score and climb the leaderboard.
+1. Borrow a book: Search for the book you want to borrow and enter your name to issue a book. The system automatically logs the transaction and updates the book's availability.
+2. Return a book: Search for the book and click 'Return' to mark the book as returned. The system updates the status of the library's database.
+3. Search for books: Use the search functionality to look up books by title, author, genre, or availability.
+4. View borrower records: Access detailed information on individual borrowers, including their borroed books and names.
+5. Manage the library collection: Add new books, update book details, or remove old entries to keep the library database up to date.
 
 **Contributing**
 
-We welcome contributions to Math Quest! If you have any ideas for new features, bug fixes, or improvements, please feel free to submit a pull request or open an issue on the GitHub repository.
+We welcome contributions to Shelfie Haven! If you have any ideas for new features, bug fixes, or improvements, please feel free to submit a pull request or open an issue on the GitHub repository.
 
 **Credits**
 
-Vincent P. Landicho
+Briones, Gio Andrew T.
 
-Neil Patrick M. Pajadan
+Masakayan, Freesia Mae H.
 
-Gabrielle B. Moneva
+Segovia, Nathaniel C.
+
+Rosal, Jannea May T.
+
+Pajadan, Neil Patrick M.
 
 
 ## License
