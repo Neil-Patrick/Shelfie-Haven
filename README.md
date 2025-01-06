@@ -1,28 +1,46 @@
-# Project Title
+Shelfie Haven
+**Overview**
 
-Book Borrowing Console App
+Math Quest is an engaging Windows Forms application designed to help users, particularly young students, improve fundamental arithmetic skills through interactive gameplay. Developed by Vincent P. Landicho, Neil Patrick M. Pajadan, and Gabrielle B. Moneva, the game presents math problems in a fun pirate-themed environment, making learning enjoyable and captivating.
 
----
+**Features**
 
-## Structure
+* Vintage graphics and animations
 
-- 0.0 Login
-- 0.1 Quiting
-- 1.0 Menu: All options
-- 1.1 Status: Status Displayed(Number of Books, Number of Borrower, Blacklisted Names)
-- 1.2 Book Catalog Management: Add, update, or delete books in the catalog including details like ISBN, title, author, genre, quantity, and location.
-- 1.3 Book Search and Borrow
-- 1.4 Borrowed Book Status (Name, Number of Borrowed Books(Each book have 10 days left, final day, 10 days passed)) After 3 days passed name will be blacklisted
-  - 1.4.1 If the user's account is blacklisted, they will not be able to log their account in the application for (Let's say 5 or 10 days)
-  - 1.4.2 Each user can only borrow up to 3 books
-- 1.5 Account Settings (6 digit pin (List of Account name and username, can be deleted, edited, Add account ))
+* Customizable difficulty levels (Easy, Normal, Hard)
 
----
+* Four arithmetic operations (Addition, Subtraction, Multiplication, Division)
 
-## Reminders
+* Unique arithmetical logic system developed by the team
 
-- (ctrl & +) add
-- (delete ) delete
-- (Enter) View & edit
-- (ctrl + f) Search
-- Ensure Controls.windowWidth must always be adjusted accordingly.
+* Leaderboard feature to track scores
+
+* Sound control (Mute/Unmute)
+
+* Timer functionality to add urgency to gameplay
+
+* User-friendly interface with intuitive navigation
+
+**Usage**
+
+1. Choose your difficulty level (Easy, Normal, Hard) and arithmetic operator (Addition, Subtraction, Multiplication, Division).
+2. Navigate your pirate ship using the arrow keys to collect treasure chests containing correct answers to math problems.
+3. Solve math problems within the time limit to earn points and avoid losing health.
+4. Compete with friends and family to achieve the highest score and climb the leaderboard.
+
+**Contributing**
+
+We welcome contributions to Math Quest! If you have any ideas for new features, bug fixes, or improvements, please feel free to submit a pull request or open an issue on the GitHub repository.
+
+**Credits**
+
+Vincent P. Landicho
+
+Neil Patrick M. Pajadan
+
+Gabrielle B. Moneva
+
+
+## License
+
+This project is licensed under the MIT License.
